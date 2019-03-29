@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Victor Granda (Sapfluxnet Team)" />
+
+<meta name="date" content="2019-03-13" />
+
+<title>Memory and Parallelization</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Memory and Parallelization</h1>
+<h4 class="author"><em>Victor Granda (Sapfluxnet Team)</em></h4>
+<h4 class="date"><em>2019-03-13</em></h4>
+
+
+
+<div id="memory" class="section level2">
+<h2>Memory</h2>
+<p>In order to be able to work with the whole database at the <em>sapwood</em> or <em>plant</em> level it is recommended at least <span class="math inline">\(16GB\)</span> of RAM memory. This is because loading all data objects already consumes <span class="math inline">\(4GB\)</span> and any operation like aggregation or metric calculation results in extra memory needed:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(sapfluxnetr)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># This will need at least 5GB of memory during the process</span></a>
+<a class="sourceLine" id="cb1-5" title="5">folder &lt;-<span class="st"> &#39;test_suite/plant&#39;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">sfn_metadata &lt;-<span class="st"> </span><span class="kw">read_sfn_metadata</span>(folder)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">daily_results &lt;-<span class="st"> </span><span class="kw">sfn_sites_in_folder</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="st">  </span><span class="kw">filter_sites_by_md</span>(</a>
+<a class="sourceLine" id="cb1-10" title="10">    si_biome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Temperate forest&quot;</span>, <span class="st">&#39;Mediterranean&#39;</span>),</a>
+<a class="sourceLine" id="cb1-11" title="11">    <span class="dt">sites =</span> sites, <span class="dt">metadata =</span> sfn_metadata</a>
+<a class="sourceLine" id="cb1-12" title="12">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="st">  </span><span class="kw">read_sfn_data</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb1-15" title="15"></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co"># Important to save, this way you will have access to the object in the future</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="kw">save</span>(daily_results, <span class="dt">file =</span> <span class="st">&#39;daily_results.RData&#39;</span>)</a></code></pre></div>
+<p>To circumvent this in less powerful systems, we recommend to work in small subsets of sites (25-30) and join the tidy results afterwards:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(sapfluxnetr)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">folder &lt;-<span class="st"> &#39;test_suite/plant&#39;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">metadata &lt;-<span class="st"> </span><span class="kw">read_sfn_metadata</span>(folder)</a>
+<a class="sourceLine" id="cb2-6" title="6">sites &lt;-<span class="st"> </span><span class="kw">sfn_sites_in_folder</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">filter_sites_by_md</span>(</a>
+<a class="sourceLine" id="cb2-8" title="8">    si_biome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Temperate forest&quot;</span>, <span class="st">&#39;Mediterranean&#39;</span>),</a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="dt">sites =</span> sites, <span class="dt">metadata =</span> sfn_metadata</a>
+<a class="sourceLine" id="cb2-10" title="10">  )</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12">daily_results_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">read_sfn_data</span>(sites[<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>], folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb2-14" title="14">daily_results_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">read_sfn_data</span>(sites[<span class="dv">31</span><span class="op">:</span><span class="dv">60</span>], folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb2-16" title="16">daily_results_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">read_sfn_data</span>(sites[<span class="dv">61</span><span class="op">:</span><span class="dv">90</span>], folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb2-18" title="18">daily_results_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">read_sfn_data</span>(sites[<span class="dv">91</span><span class="op">:</span><span class="dv">110</span>], folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb2-20" title="20"></a>
+<a class="sourceLine" id="cb2-21" title="21">daily_results_steps &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(</a>
+<a class="sourceLine" id="cb2-22" title="22">  daily_results_<span class="dv">1</span>, daily_results_<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-23" title="23">  daily_results_<span class="dv">3</span>, daily_results_<span class="dv">4</span></a>
+<a class="sourceLine" id="cb2-24" title="24">)</a>
+<a class="sourceLine" id="cb2-25" title="25"></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="kw">rm</span>(daily_results_<span class="dv">1</span>, daily_results_<span class="dv">2</span>, daily_results_<span class="dv">3</span>, daily_results_<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="kw">save</span>(daily_results_steps, <span class="dt">file =</span> <span class="st">&#39;daily_results_steps.RData&#39;</span>)</a></code></pre></div>
+</div>
+<div id="parallelization" class="section level2">
+<h2>Parallelization</h2>
+<p><code>sapfluxnetr</code> includes tha capability to parallelize the metrics calculation when performed on a <code>sfn_data_multi</code> object. This is made thanks to the <a href="https://github.com/DavisVaughan/furrr">furrr</a> package (which uses the <a href="https://github.com/HenrikBengtsson/future">future</a> package behind the scenes). By default, the code will run in a sequential process, which is the usual way the R code runs. But setting the <code>future::plan</code> to <code>multicore</code> (in Linux), <code>multisession</code> (in Windows) or <code>multiprocess</code> (automatically choose between the previous plans depending on the system) will run the code in parallel, dividing the sites between the available cores.</p>
+<pre><code>&gt; Be advised, parallelization usually means more RAM used, so in systems
+  with less than 16GB maybe is not a good idea.
+  Also, the time benefits start to show when analysing 10 sites or above.</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># loading future package</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># setting the plan</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">plan</span>(<span class="st">&#39;multiprocess&#39;</span>)</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># metrics!!</span></a>
+<a class="sourceLine" id="cb4-8" title="8">daily_results_parallel &lt;-<span class="st"> </span><span class="kw">sfn_sites_in_folder</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">filter_sites_by_md</span>(</a>
+<a class="sourceLine" id="cb4-10" title="10">    si_biome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Temperate forest&quot;</span>, <span class="st">&#39;Mediterranean&#39;</span>),</a>
+<a class="sourceLine" id="cb4-11" title="11">    <span class="dt">sites =</span> sites, <span class="dt">metadata =</span> sfn_metadata</a>
+<a class="sourceLine" id="cb4-12" title="12">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="st">  </span><span class="kw">read_sfn_data</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb4-15" title="15"></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co"># Important to save, this way you will have access to the object in the future</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="kw">save</span>(daily_results_parallel, <span class="dt">file =</span> <span class="st">&#39;daily_results_parallel.RData&#39;</span>)</a></code></pre></div>
+<div id="memory-limit" class="section level3">
+<h3>Memory limit</h3>
+<p>When using <code>furrr</code>, even in the <code>sequential</code> plan, the <code>future</code> package sets a limit of <span class="math inline">\(500MB\)</span> for each core. With sapfluxnet data this limit is easily exceeded, causing an error. To avoid this we may want to set the <code>future.globals.maxSize</code> limit to a higher value (<span class="math inline">\(1GB\)</span> for example, but the limit wanted really depend on the plan and the number of sites):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># future library</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># plan sequential, not really needed, as it is the default, but for the sake of</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># clarity</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw">plant</span>(<span class="st">&#39;sequential&#39;</span>)</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co"># up the limit to 1GB, this in bytes is 1014*1024^2 </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw">options</span>(<span class="st">&#39;future.globals.maxSize&#39;</span> =<span class="st"> </span><span class="dv">1014</span><span class="op">*</span><span class="dv">1024</span><span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb5-10" title="10"></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co"># do the metrics</span></a>
+<a class="sourceLine" id="cb5-12" title="12">daily_results_limit &lt;-<span class="st"> </span><span class="kw">sfn_sites_in_folder</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw">filter_sites_by_md</span>(</a>
+<a class="sourceLine" id="cb5-14" title="14">    si_biome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Temperate forest&quot;</span>, <span class="st">&#39;Mediterranean&#39;</span>),</a>
+<a class="sourceLine" id="cb5-15" title="15">    <span class="dt">sites =</span> sites, <span class="dt">metadata =</span> sfn_metadata</a>
+<a class="sourceLine" id="cb5-16" title="16">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="st">  </span><span class="kw">read_sfn_data</span>(folder) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="st">  </span><span class="kw">daily_metrics</span>(<span class="dt">tidy =</span> <span class="ot">TRUE</span>, <span class="dt">metadata =</span> sfn_metadata)</a>
+<a class="sourceLine" id="cb5-19" title="19"></a>
+<a class="sourceLine" id="cb5-20" title="20"><span class="co"># Important to save, this way you will have access to the object in the future</span></a>
+<a class="sourceLine" id="cb5-21" title="21"><span class="kw">save</span>(daily_results_limit, <span class="dt">file =</span> <span class="st">&#39;daily_results_limit.RData&#39;</span>)</a></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
