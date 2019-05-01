@@ -60,7 +60,7 @@ get_env_data(foo_mutated)[['ws']][1:10]
 foo_mutated_2 <- sfn_mutate_at(
   ARG_TRE,
   vars(one_of(names(get_sapf_data(ARG_TRE)[,-1]))),
-  funs(case_when(
+  list(~ case_when(
     ws > 25 ~ NA_real_,
     TRUE ~ .
   ))
@@ -113,7 +113,7 @@ vars_to_not_mutate <- c(
 multi_mutated_2 <- sfn_mutate_at(
   multi_sfn,
   vars(-one_of(vars_to_not_mutate)),
-  funs(case_when(
+  list(~ case_when(
     ws > 25 ~ NA_real_,
     TRUE ~ .
   ))

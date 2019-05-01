@@ -13,13 +13,13 @@ library(dplyr)
 # data
 data('ARG_TRE', package = 'sapfluxnetr')
 
-# summarising funs (built with funs function from dplyr package)
-custom_funs <- funs(mean = mean(., na.rm = TRUE), std_dev = sd(., na.rm = TRUE))
+# summarising funs (built with quosure style lambdas list)
+custom_funs <- list(mean = ~ mean(., na.rm = TRUE), std_dev = ~ sd(., na.rm = TRUE))
 
 # metrics
 foo_simpler_metrics <- sfn_metrics(
   ARG_TRE,
-  period = 'daily',
+  period = '1 day',
   .funs = custom_funs,
   solar = TRUE,
   interval = 'general'
@@ -30,7 +30,7 @@ foo_simpler_metrics[['sapf']]
 ## ------------------------------------------------------------------------
 foo_simpler_metrics_midday <- sfn_metrics(
   ARG_TRE,
-  period = 'daily',
+  period = '1 day',
   .funs = custom_funs,
   solar = TRUE,
   interval = 'midday', int_start = 11, int_end = 13
@@ -51,23 +51,19 @@ foo_weekly <- sfn_metrics(
 foo_weekly[['env']]
 
 ## ------------------------------------------------------------------------
-# custom
 foo_custom <- sfn_metrics(
-  ARG_TRE,
-  period = as.POSIXct(
-    c('2009-11-17 00:00:00', '2009-11-22 14:00:00', '2009-11-30 23:59:00'),
-                      tz = 'UTC'
-  ),
+  AUS_CAN_ST2_MIX,
+  period = lubridate::quarter, # period is the name of the function now
   .funs = custom_funs,
   solar = TRUE,
-  interval = 'general'
+  interval = 'general',
+  with_year = TRUE # argument for lubridate::quarter
 )
-foo_custom[['sapf']]
 
 ## ------------------------------------------------------------------------
 foo_simpler_metrics_end <- sfn_metrics(
   ARG_TRE,
-  period = 'daily',
+  period = '1 day',
   .funs = custom_funs,
   solar = TRUE,
   interval = 'general',
@@ -92,11 +88,11 @@ max_time <- function(x, time) {
   }
 }
 
-custom_funs <- funs(max = max(., na.rm = TRUE), max_time(., TIMESTAMP_coll))
+custom_funs <- list(max = ~ max(., na.rm = TRUE), ~ max_time(., TIMESTAMP_coll))
 
 max_time_metrics <- sfn_metrics(
   ARG_TRE,
-  period = 'daily',
+  period = '1 day',
   .funs = custom_funs,
   solar = TRUE,
   interval = 'general'

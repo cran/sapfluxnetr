@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2019-03-13" />
+<meta name="date" content="2019-04-30" />
 
 <title>Custom aggregation</title>
 
@@ -291,6 +291,9 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
+
+
+
 </head>
 
 <body>
@@ -299,12 +302,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Custom aggregation</h1>
-<h4 class="author"><em>Victor Granda (Sapfluxnet Team)</em></h4>
-<h4 class="date"><em>2019-03-13</em></h4>
+<h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
+<h4 class="date">2019-04-30</h4>
 
 
 
-<p><code>sapfluxnetr</code> package offers a very flexible but powerful system based on <code>tidyverse</code> and <code>tibbletime</code> packages to aggregate and summarise the site/s data in the form of the <code>sfn_metrics</code> functions. All the metrics family of functions (<code>?metrics</code>) make use of <code>sfn_metrics</code> under the hood. If you want full control to the statistics returned and aggregation periodswe recommend you to use this main function. This vignette will show you how.</p>
+<p><code>sapfluxnetr</code> package offers a very flexible but powerful API based on the <code>tidyverse</code> packages to aggregate and summarise the site/s data in the form of the <code>sfn_metrics</code> function. All the metrics family of functions (<code>?metrics</code>) make use of the <code>sfn_metrics</code> funcion under the hood. If you want full control to the statistics returned and aggregation periods, we recommend you to use this API. This vignette will show you how.</p>
 <div id="pre-fixed-summarising-functions" class="section level2">
 <h2>Pre-fixed summarising functions</h2>
 <ol style="list-style-type: decimal">
@@ -319,72 +322,74 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="custom-summarising-functions" class="section level2">
 <h2>Custom summarising functions</h2>
-<p><code>daily_metrics</code> and related functions return a complete set of metrics ready for use, but if you want simpler metrics and/or avoid the computational burden of returning all the pre-fixed metrics you can supply your own summarising functions using the <code>funs</code> function belonging to the <code>dplyr</code> package in the <code>tidyverse</code> suite:</p>
+<p><code>daily_metrics</code> and related functions return a complete set of metrics ready for use, but if you want simpler metrics and/or different metrics you can supply your own summarising functions using the <code>.funs</code> argument.<br />
+The correct way of especifying the functions are as described in the <code>summarise_all</code> help (<code>help(dplyr::summarise_all)</code>), function names, quosure style lambda functions or a list of either form. We <strong>recommend</strong> a list of quosure style lamda functions, as is easier to add the corresponding arguments for each function:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># libraries</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(sapfluxnetr)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;     filter, lag</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
-<a class="sourceLine" id="cb1-12" title="12"></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">### only mean and sd at a daily scale</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co"># data</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="kw">data</span>(<span class="st">&#39;ARG_TRE&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;sapfluxnetr&#39;</span>)</a>
-<a class="sourceLine" id="cb1-16" title="16"></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co"># summarising funs (built with funs function from dplyr package)</span></a>
-<a class="sourceLine" id="cb1-18" title="18">custom_funs &lt;-<span class="st"> </span><span class="kw">funs</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">std_dev =</span> <span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; Warning: funs() is soft deprecated as of dplyr 0.8.0</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; please use list() instead</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; # Before:</span></a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt; funs(name = f(.)</span></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; # After: </span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; list(name = ~f(.))</span></a>
-<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt; This warning is displayed once per session.</span></a>
-<a class="sourceLine" id="cb1-28" title="28"></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="co"># metrics</span></a>
-<a class="sourceLine" id="cb1-30" title="30">foo_simpler_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
-<a class="sourceLine" id="cb1-31" title="31">  ARG_TRE,</a>
-<a class="sourceLine" id="cb1-32" title="32">  <span class="dt">period =</span> <span class="st">&#39;daily&#39;</span>,</a>
-<a class="sourceLine" id="cb1-33" title="33">  <span class="dt">.funs =</span> custom_funs,</a>
-<a class="sourceLine" id="cb1-34" title="34">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb1-35" title="35">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></a>
-<a class="sourceLine" id="cb1-36" title="36">)</a>
-<a class="sourceLine" id="cb1-37" title="37"><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></a>
-<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
-<a class="sourceLine" id="cb1-39" title="39"></a>
-<a class="sourceLine" id="cb1-40" title="40">foo_simpler_metrics[[<span class="st">&#39;sapf&#39;</span>]]</a>
-<a class="sourceLine" id="cb1-41" title="41"><span class="co">#&gt; # A time tibble: 14 x 9</span></a>
-<a class="sourceLine" id="cb1-42" title="42"><span class="co">#&gt; # Index: TIMESTAMP</span></a>
-<a class="sourceLine" id="cb1-43" title="43"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
-<a class="sourceLine" id="cb1-44" title="44"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb1-45" title="45"><span class="co">#&gt;  1 2009-11-17 00:00:00             308.             173.             303.</span></a>
-<a class="sourceLine" id="cb1-46" title="46"><span class="co">#&gt;  2 2009-11-18 00:00:00             507.             376.             432.</span></a>
-<a class="sourceLine" id="cb1-47" title="47"><span class="co">#&gt;  3 2009-11-19 00:00:00             541.             380.             391.</span></a>
-<a class="sourceLine" id="cb1-48" title="48"><span class="co">#&gt;  4 2009-11-20 00:00:00             330.             218.             272.</span></a>
-<a class="sourceLine" id="cb1-49" title="49"><span class="co">#&gt;  5 2009-11-21 00:00:00             338.             219.             278.</span></a>
-<a class="sourceLine" id="cb1-50" title="50"><span class="co">#&gt;  6 2009-11-22 00:00:00             384.             243.             310.</span></a>
-<a class="sourceLine" id="cb1-51" title="51"><span class="co">#&gt;  7 2009-11-23 00:00:00             492.             300.             390.</span></a>
-<a class="sourceLine" id="cb1-52" title="52"><span class="co">#&gt;  8 2009-11-24 00:00:00             573.             389.             497.</span></a>
-<a class="sourceLine" id="cb1-53" title="53"><span class="co">#&gt;  9 2009-11-25 00:00:00             601.             400.             484.</span></a>
-<a class="sourceLine" id="cb1-54" title="54"><span class="co">#&gt; 10 2009-11-26 00:00:00             502.             360.             450.</span></a>
-<a class="sourceLine" id="cb1-55" title="55"><span class="co">#&gt; 11 2009-11-27 00:00:00             544.             411.             506.</span></a>
-<a class="sourceLine" id="cb1-56" title="56"><span class="co">#&gt; 12 2009-11-28 00:00:00             573.             451.             589.</span></a>
-<a class="sourceLine" id="cb1-57" title="57"><span class="co">#&gt; 13 2009-11-29 00:00:00             371.             285.             357.</span></a>
-<a class="sourceLine" id="cb1-58" title="58"><span class="co">#&gt; 14 2009-11-30 00:00:00             386.             293.             381.</span></a>
-<a class="sourceLine" id="cb1-59" title="59"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb1-60" title="60"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb1-61" title="61"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></a></code></pre></div>
-<p>You can also select if the “special interest” intervals (predawn, midday, nighttime or daylight) are calculated or not. For example, if you are only interested in the midday interval you can use:</p>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; Registered S3 methods overwritten by &#39;ggplot2&#39;:</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt;   method         from </span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt;   [.quosures     rlang</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt;   c.quosures     rlang</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt;   print.quosures rlang</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt;     filter, lag</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
+<a class="sourceLine" id="cb1-17" title="17"></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">### only mean and sd at a daily scale</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co"># data</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="kw">data</span>(<span class="st">&#39;ARG_TRE&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;sapfluxnetr&#39;</span>)</a>
+<a class="sourceLine" id="cb1-21" title="21"></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co"># summarising funs (built with quosure style lambdas list)</span></a>
+<a class="sourceLine" id="cb1-23" title="23">custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">mean =</span> <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">std_dev =</span> <span class="op">~</span><span class="st"> </span><span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb1-24" title="24"></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co"># metrics</span></a>
+<a class="sourceLine" id="cb1-26" title="26">foo_simpler_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
+<a class="sourceLine" id="cb1-27" title="27">  ARG_TRE,</a>
+<a class="sourceLine" id="cb1-28" title="28">  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</a>
+<a class="sourceLine" id="cb1-29" title="29">  <span class="dt">.funs =</span> custom_funs,</a>
+<a class="sourceLine" id="cb1-30" title="30">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb1-31" title="31">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></a>
+<a class="sourceLine" id="cb1-32" title="32">)</a>
+<a class="sourceLine" id="cb1-33" title="33"><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></a>
+<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
+<a class="sourceLine" id="cb1-35" title="35"></a>
+<a class="sourceLine" id="cb1-36" title="36">foo_simpler_metrics[[<span class="st">&#39;sapf&#39;</span>]]</a>
+<a class="sourceLine" id="cb1-37" title="37"><span class="co">#&gt; # A tibble: 14 x 9</span></a>
+<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
+<a class="sourceLine" id="cb1-39" title="39"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb1-40" title="40"><span class="co">#&gt;  1 2009-11-17 00:00:00             308.             173.             303.</span></a>
+<a class="sourceLine" id="cb1-41" title="41"><span class="co">#&gt;  2 2009-11-18 00:00:00             507.             376.             432.</span></a>
+<a class="sourceLine" id="cb1-42" title="42"><span class="co">#&gt;  3 2009-11-19 00:00:00             541.             380.             391.</span></a>
+<a class="sourceLine" id="cb1-43" title="43"><span class="co">#&gt;  4 2009-11-20 00:00:00             330.             218.             272.</span></a>
+<a class="sourceLine" id="cb1-44" title="44"><span class="co">#&gt;  5 2009-11-21 00:00:00             338.             219.             278.</span></a>
+<a class="sourceLine" id="cb1-45" title="45"><span class="co">#&gt;  6 2009-11-22 00:00:00             384.             243.             310.</span></a>
+<a class="sourceLine" id="cb1-46" title="46"><span class="co">#&gt;  7 2009-11-23 00:00:00             492.             300.             390.</span></a>
+<a class="sourceLine" id="cb1-47" title="47"><span class="co">#&gt;  8 2009-11-24 00:00:00             573.             389.             497.</span></a>
+<a class="sourceLine" id="cb1-48" title="48"><span class="co">#&gt;  9 2009-11-25 00:00:00             601.             400.             484.</span></a>
+<a class="sourceLine" id="cb1-49" title="49"><span class="co">#&gt; 10 2009-11-26 00:00:00             502.             360.             450.</span></a>
+<a class="sourceLine" id="cb1-50" title="50"><span class="co">#&gt; 11 2009-11-27 00:00:00             544.             411.             506.</span></a>
+<a class="sourceLine" id="cb1-51" title="51"><span class="co">#&gt; 12 2009-11-28 00:00:00             573.             451.             589.</span></a>
+<a class="sourceLine" id="cb1-52" title="52"><span class="co">#&gt; 13 2009-11-29 00:00:00             371.             285.             357.</span></a>
+<a class="sourceLine" id="cb1-53" title="53"><span class="co">#&gt; 14 2009-11-30 00:00:00             386.             293.             381.</span></a>
+<a class="sourceLine" id="cb1-54" title="54"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb1-55" title="55"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb1-56" title="56"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></a></code></pre></div>
+<blockquote>
+<p>When supplying only one function to .funs, names of variables are not changed to contain the metric name at the end, as the summary function returns the same columns as the original data</p>
+</blockquote>
+</div>
+<div id="special-interest-intervals" class="section level2">
+<h2>Special interest intervals</h2>
+<p>You can also choose if the “special interest” intervals (predawn, midday, nighttime or daylight) are calculated or not. For example, if you are only interested in the midday interval you can use:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">foo_simpler_metrics_midday &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
 <a class="sourceLine" id="cb2-2" title="2">  ARG_TRE,</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">period =</span> <span class="st">&#39;daily&#39;</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</a>
 <a class="sourceLine" id="cb2-4" title="4">  <span class="dt">.funs =</span> custom_funs,</a>
 <a class="sourceLine" id="cb2-5" title="5">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-6" title="6">  <span class="dt">interval =</span> <span class="st">&#39;midday&#39;</span>, <span class="dt">int_start =</span> <span class="dv">11</span>, <span class="dt">int_end =</span> <span class="dv">13</span></a>
@@ -412,15 +417,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean_md &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev_md &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev_md &lt;dbl&gt;</span></a></code></pre></div>
-<blockquote>
-<p>When supplying only one function names of variables are not changed to contain the metric name at the end, as the summary function returns the same columns as the original data</p>
-</blockquote>
 </div>
 <div id="custom-aggregation-periods" class="section level2">
 <h2>Custom aggregation periods</h2>
-<p><code>period</code> argument in <code>sfn_metrics</code> is passed to <code>collapse_index</code> function in the <code>tibbletime</code> package, and so, it can use the same input:</p>
+<p><code>period</code> argument in <code>sfn_metrics</code> is passed to <code>.collapse_timestamp</code> function, and so, it can use the same input:</p>
 <ul>
-<li>“frequency period” format, where frequency is a number and period is an interval as character (i.e. “1 year” same as “yearly”, “7 days”)</li>
+<li>“frequency period” format, where frequency is a number and period is an interval as character (i.e. “1 year”, “7 days”)</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># weekly</span></a>
 <a class="sourceLine" id="cb3-2" title="2">foo_weekly &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
@@ -434,64 +436,52 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
 <a class="sourceLine" id="cb3-11" title="11"></a>
 <a class="sourceLine" id="cb3-12" title="12">foo_weekly[[<span class="st">&#39;env&#39;</span>]]</a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; # A time tibble: 3 x 19</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; # Index: TIMESTAMP</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt;   TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; 1 2009-11-15 00:00:00    4.81    35.3    0.598       280.    15.5</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; 2 2009-11-22 00:00:00    6.15    35.3    0.656       327.    24.5</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; 3 2009-11-29 00:00:00    2.55    40.9    0.453       261.    23.1</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; # … with 13 more variables: precip_mean &lt;dbl&gt;, swc_shallow_mean &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; #   ppfd_in_mean &lt;dbl&gt;, ext_rad_mean &lt;dbl&gt;, ta_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt; #   rh_std_dev &lt;dbl&gt;, vpd_std_dev &lt;dbl&gt;, sw_in_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; #   ws_std_dev &lt;dbl&gt;, precip_std_dev &lt;dbl&gt;, swc_shallow_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; #   ppfd_in_std_dev &lt;dbl&gt;, ext_rad_std_dev &lt;dbl&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; # A tibble: 3 x 19</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt;   TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; 1 2009-11-15 00:00:00    4.81    35.3    0.598       280.    15.5</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; 2 2009-11-22 00:00:00    6.15    35.3    0.656       327.    24.5</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; 3 2009-11-29 00:00:00    2.55    40.9    0.453       261.    23.1</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; # … with 13 more variables: precip_mean &lt;dbl&gt;, swc_shallow_mean &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; #   ppfd_in_mean &lt;dbl&gt;, ext_rad_mean &lt;dbl&gt;, ta_std_dev &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; #   rh_std_dev &lt;dbl&gt;, vpd_std_dev &lt;dbl&gt;, sw_in_std_dev &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt; #   ws_std_dev &lt;dbl&gt;, precip_std_dev &lt;dbl&gt;, swc_shallow_std_dev &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; #   ppfd_in_std_dev &lt;dbl&gt;, ext_rad_std_dev &lt;dbl&gt;</span></a></code></pre></div>
 <ul>
-<li>A vector of dates as period boundaries. This way you can build irregular or custom periods.</li>
+<li>A custom function name (without quotes). This way you can build irregular or custom periods. This function first argument must always be the timestamp to be collapsed, and can have other arguments that will be supplied in the dots (<code>...</code>) argument of <code>sfn_metrics</code>. Also, this function always must return a vector of timestamps of the same length as the original timestamp.<br />
+For example, if you want to summarise by quarters we can use the <code>quarter</code> function from the lubridate package:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># custom</span></a>
-<a class="sourceLine" id="cb4-2" title="2">foo_custom &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
-<a class="sourceLine" id="cb4-3" title="3">  ARG_TRE,</a>
-<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">period =</span> <span class="kw">as.POSIXct</span>(</a>
-<a class="sourceLine" id="cb4-5" title="5">    <span class="kw">c</span>(<span class="st">&#39;2009-11-17 00:00:00&#39;</span>, <span class="st">&#39;2009-11-22 14:00:00&#39;</span>, <span class="st">&#39;2009-11-30 23:59:00&#39;</span>),</a>
-<a class="sourceLine" id="cb4-6" title="6">                      <span class="dt">tz =</span> <span class="st">&#39;UTC&#39;</span></a>
-<a class="sourceLine" id="cb4-7" title="7">  ),</a>
-<a class="sourceLine" id="cb4-8" title="8">  <span class="dt">.funs =</span> custom_funs,</a>
-<a class="sourceLine" id="cb4-9" title="9">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb4-10" title="10">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></a>
-<a class="sourceLine" id="cb4-11" title="11">)</a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
-<a class="sourceLine" id="cb4-14" title="14">foo_custom[[<span class="st">&#39;sapf&#39;</span>]]</a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; # A time tibble: 2 x 9</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; # Index: TIMESTAMP</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;   TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;   &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 1 2009-11-17 00:00:00             419.             290.             338.</span></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 2 2009-11-22 14:00:00             501.             355.             450.</span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">foo_custom &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
+<a class="sourceLine" id="cb4-2" title="2">  AUS_CAN_ST2_MIX,</a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">period =</span> lubridate<span class="op">::</span>quarter, <span class="co"># period is the name of the function now</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">.funs =</span> custom_funs,</a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="dt">with_year =</span> <span class="ot">TRUE</span> <span class="co"># argument for lubridate::quarter</span></a>
+<a class="sourceLine" id="cb4-8" title="8">)</a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; [1] &quot;Crunching data for AUS_CAN_ST2_MIX. In large datasets this could take a while&quot;</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt;             can be less accurate</span></a>
+<a class="sourceLine" id="cb4-12" title="12"></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;             can be less accurate</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></a></code></pre></div>
 </div>
 <div id="extra-parameters" class="section level2">
 <h2>Extra parameters</h2>
 <p><code>sfn_metrics</code> has a <code>...</code> parameter intended to supply additional parameters to the internal functions used:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>tibbletime::collapse_index</code> accepts the following extra arguments:</p>
+<li><p><code>.collapse_timestamp</code> accepts the following extra arguments:</p>
 <ul>
-<li><code>start_date</code><br />
-NULL by default in the sfn_metrics implementation</li>
 <li><code>side</code><br />
 “start” by default in the sfn_metrics implementation</li>
-<li><code>clean</code><br />
-TRUE by default in the sfn_metrics implementation</li>
 </ul></li>
-<li><p><code>dplyr::summarise_all</code> accepts extra arguments intended to be applied to the summarising functions provided (to <strong>all</strong>, so they all must have the argument provided or an error will be raised). That’s the reason because we recommend to use the <code>funs</code> function from <code>dplyr</code>, as the arguments are specified for the individual functions.</p></li>
+<li><p><code>dplyr::summarise_all</code> accepts extra arguments intended to be applied to the summarising functions provided (to <strong>all</strong>, so they all must have the argument provided or an error will be raised). That’s the reason because we recommend to use the list way, as the arguments are specified for the individual functions.</p></li>
 </ol>
-<p>For example, if we want the TIMESTAMPs after aggregation to show the end of the period instead the beggining (default) we can do the following:</p>
+<p>For example, if we want the TIMESTAMPs after aggregation to show the end of the period instead the begining (default) we can do the following:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">foo_simpler_metrics_end &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
 <a class="sourceLine" id="cb5-2" title="2">  ARG_TRE,</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">period =</span> <span class="st">&#39;daily&#39;</span>,</a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</a>
 <a class="sourceLine" id="cb5-4" title="4">  <span class="dt">.funs =</span> custom_funs,</a>
 <a class="sourceLine" id="cb5-5" title="5">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb5-6" title="6">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</a>
@@ -501,28 +491,30 @@ TRUE by default in the sfn_metrics implementation</li>
 <a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
 <a class="sourceLine" id="cb5-11" title="11"></a>
 <a class="sourceLine" id="cb5-12" title="12">foo_simpler_metrics_end[[<span class="st">&#39;sapf&#39;</span>]]</a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt; # A time tibble: 14 x 9</span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; # Index: TIMESTAMP</span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt;  1 2009-11-18 00:00:00             308.             173.             303.</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt;  2 2009-11-19 00:00:00             507.             376.             432.</span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt;  3 2009-11-20 00:00:00             541.             380.             391.</span></a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt;  4 2009-11-21 00:00:00             330.             218.             272.</span></a>
-<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt;  5 2009-11-22 00:00:00             338.             219.             278.</span></a>
-<a class="sourceLine" id="cb5-22" title="22"><span class="co">#&gt;  6 2009-11-23 00:00:00             384.             243.             310.</span></a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="co">#&gt;  7 2009-11-24 00:00:00             492.             300.             390.</span></a>
-<a class="sourceLine" id="cb5-24" title="24"><span class="co">#&gt;  8 2009-11-25 00:00:00             573.             389.             497.</span></a>
-<a class="sourceLine" id="cb5-25" title="25"><span class="co">#&gt;  9 2009-11-26 00:00:00             601.             400.             484.</span></a>
-<a class="sourceLine" id="cb5-26" title="26"><span class="co">#&gt; 10 2009-11-27 00:00:00             502.             360.             450.</span></a>
-<a class="sourceLine" id="cb5-27" title="27"><span class="co">#&gt; 11 2009-11-28 00:00:00             544.             411.             506.</span></a>
-<a class="sourceLine" id="cb5-28" title="28"><span class="co">#&gt; 12 2009-11-29 00:00:00             573.             451.             589.</span></a>
-<a class="sourceLine" id="cb5-29" title="29"><span class="co">#&gt; 13 2009-11-30 00:00:00             371.             285.             357.</span></a>
-<a class="sourceLine" id="cb5-30" title="30"><span class="co">#&gt; 14 2009-12-01 00:00:00             386.             293.             381.</span></a>
-<a class="sourceLine" id="cb5-31" title="31"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb5-32" title="32"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb5-33" title="33"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt; # A tibble: 14 x 9</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt;  1 2009-11-18 00:00:00             308.             173.             303.</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt;  2 2009-11-19 00:00:00             507.             376.             432.</span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt;  3 2009-11-20 00:00:00             541.             380.             391.</span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt;  4 2009-11-21 00:00:00             330.             218.             272.</span></a>
+<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt;  5 2009-11-22 00:00:00             338.             219.             278.</span></a>
+<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt;  6 2009-11-23 00:00:00             384.             243.             310.</span></a>
+<a class="sourceLine" id="cb5-22" title="22"><span class="co">#&gt;  7 2009-11-24 00:00:00             492.             300.             390.</span></a>
+<a class="sourceLine" id="cb5-23" title="23"><span class="co">#&gt;  8 2009-11-25 00:00:00             573.             389.             497.</span></a>
+<a class="sourceLine" id="cb5-24" title="24"><span class="co">#&gt;  9 2009-11-26 00:00:00             601.             400.             484.</span></a>
+<a class="sourceLine" id="cb5-25" title="25"><span class="co">#&gt; 10 2009-11-27 00:00:00             502.             360.             450.</span></a>
+<a class="sourceLine" id="cb5-26" title="26"><span class="co">#&gt; 11 2009-11-28 00:00:00             544.             411.             506.</span></a>
+<a class="sourceLine" id="cb5-27" title="27"><span class="co">#&gt; 12 2009-11-29 00:00:00             573.             451.             589.</span></a>
+<a class="sourceLine" id="cb5-28" title="28"><span class="co">#&gt; 13 2009-11-30 00:00:00             371.             285.             357.</span></a>
+<a class="sourceLine" id="cb5-29" title="29"><span class="co">#&gt; 14 2009-12-01 00:00:00             386.             293.             381.</span></a>
+<a class="sourceLine" id="cb5-30" title="30"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb5-31" title="31"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb5-32" title="32"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></a></code></pre></div>
 <p>If it is compared with the <code>foo_simpler_metrics</code> calculated before, now the period is identified in the TIMESTAMP by the ending of the period (daily in this case).</p>
+<blockquote>
+<p>When supplying custom functions as “period” argument, the default coverage statistic is not reliable as there is no way of knowing beforehand the period/s in minutes.</p>
+</blockquote>
 </div>
 <div id="temporary-columns-helpers" class="section level2">
 <h2>Temporary columns helpers</h2>
@@ -546,11 +538,11 @@ This makes impossible to use any summarise functions that obtain the time of the
 <a class="sourceLine" id="cb6-13" title="13">  }</a>
 <a class="sourceLine" id="cb6-14" title="14">}</a>
 <a class="sourceLine" id="cb6-15" title="15"></a>
-<a class="sourceLine" id="cb6-16" title="16">custom_funs &lt;-<span class="st"> </span><span class="kw">funs</span>(<span class="dt">max =</span> <span class="kw">max</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max_time</span>(., TIMESTAMP_coll))</a>
+<a class="sourceLine" id="cb6-16" title="16">custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">max =</span> <span class="op">~</span><span class="st"> </span><span class="kw">max</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="op">~</span><span class="st"> </span><span class="kw">max_time</span>(., TIMESTAMP_coll))</a>
 <a class="sourceLine" id="cb6-17" title="17"></a>
 <a class="sourceLine" id="cb6-18" title="18">max_time_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</a>
 <a class="sourceLine" id="cb6-19" title="19">  ARG_TRE,</a>
-<a class="sourceLine" id="cb6-20" title="20">  <span class="dt">period =</span> <span class="st">&#39;daily&#39;</span>,</a>
+<a class="sourceLine" id="cb6-20" title="20">  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</a>
 <a class="sourceLine" id="cb6-21" title="21">  <span class="dt">.funs =</span> custom_funs,</a>
 <a class="sourceLine" id="cb6-22" title="22">  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb6-23" title="23">  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></a>
@@ -559,27 +551,26 @@ This makes impossible to use any summarise functions that obtain the time of the
 <a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></a>
 <a class="sourceLine" id="cb6-27" title="27"></a>
 <a class="sourceLine" id="cb6-28" title="28">max_time_metrics[[<span class="st">&#39;sapf&#39;</span>]]</a>
-<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; # A time tibble: 14 x 9</span></a>
-<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; # Index: TIMESTAMP</span></a>
-<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
-<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt;  1 2009-11-17 00:00:00             322.             190.             313.</span></a>
-<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt;  2 2009-11-18 00:00:00             778.             715.             679.</span></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt;  3 2009-11-19 00:00:00            1015.             694.             633.</span></a>
-<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt;  4 2009-11-20 00:00:00             648.             401.             442.</span></a>
-<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt;  5 2009-11-21 00:00:00             664.             406.             539.</span></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt;  6 2009-11-22 00:00:00             812.             564.             816.</span></a>
-<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt;  7 2009-11-23 00:00:00            1085.             676.             935.</span></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt;  8 2009-11-24 00:00:00             992.             736.            1115.</span></a>
-<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt;  9 2009-11-25 00:00:00             976.             646.             951.</span></a>
-<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; 10 2009-11-26 00:00:00             932.             766.            1087.</span></a>
-<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; 11 2009-11-27 00:00:00             862.             704.             921.</span></a>
-<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; 12 2009-11-28 00:00:00             845.             763.            1165.</span></a>
-<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt; 13 2009-11-29 00:00:00             714.             747.             701.</span></a>
-<a class="sourceLine" id="cb6-46" title="46"><span class="co">#&gt; 14 2009-11-30 00:00:00             875.             646.             919.</span></a>
-<a class="sourceLine" id="cb6-47" title="47"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-48" title="48"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_2_max_time &lt;dttm&gt;,</span></a>
-<a class="sourceLine" id="cb6-49" title="49"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_4_max_time &lt;dttm&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; # A tibble: 14 x 9</span></a>
+<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></a>
+<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt;  1 2009-11-17 00:00:00             322.             190.             313.</span></a>
+<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt;  2 2009-11-18 00:00:00             778.             715.             679.</span></a>
+<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt;  3 2009-11-19 00:00:00            1015.             694.             633.</span></a>
+<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt;  4 2009-11-20 00:00:00             648.             401.             442.</span></a>
+<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt;  5 2009-11-21 00:00:00             664.             406.             539.</span></a>
+<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt;  6 2009-11-22 00:00:00             812.             564.             816.</span></a>
+<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt;  7 2009-11-23 00:00:00            1085.             676.             935.</span></a>
+<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt;  8 2009-11-24 00:00:00             992.             736.            1115.</span></a>
+<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt;  9 2009-11-25 00:00:00             976.             646.             951.</span></a>
+<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; 10 2009-11-26 00:00:00             932.             766.            1087.</span></a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; 11 2009-11-27 00:00:00             862.             704.             921.</span></a>
+<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; 12 2009-11-28 00:00:00             845.             763.            1165.</span></a>
+<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; 13 2009-11-29 00:00:00             714.             747.             701.</span></a>
+<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt; 14 2009-11-30 00:00:00             875.             646.             919.</span></a>
+<a class="sourceLine" id="cb6-46" title="46"><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-47" title="47"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_2_max_time &lt;dttm&gt;,</span></a>
+<a class="sourceLine" id="cb6-48" title="48"><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_4_max_time &lt;dttm&gt;</span></a></code></pre></div>
 </div>
 </div>
 

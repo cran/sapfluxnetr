@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 #  library(tidyverse)
 #  
 #  # This will need at least 5GB of memory during the process
-#  folder <- 'test_suite/plant'
+#  folder <- 'RData/plant'
 #  sfn_metadata <- read_sfn_metadata(folder)
 #  
 #  daily_results <- sfn_sites_in_folder(folder) %>%
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 #  library(sapfluxnetr)
 #  library(tidyverse)
 #  
-#  folder <- 'test_suite/plant'
+#  folder <- 'RData/plant'
 #  metadata <- read_sfn_metadata(folder)
 #  sites <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(

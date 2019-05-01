@@ -6,12 +6,8 @@ knitr::opts_chunk$set(
 
 folder <- 'resources'
 
-## ----remotes_inst, eval=FALSE--------------------------------------------
-#  # if (!require(remotes)) {install.packages('remotes')}
-#  remotes::install_github(
-#    'sapfluxnet/sapfluxnetr',
-#    build_opts = c("--no-resave-data", "--no-manual", "--build-vignettes")
-#  )
+## ----cran_install, eval=FALSE--------------------------------------------
+#  install.packages('sapfluxnetr')
 
 ## ----github_inst, eval=FALSE---------------------------------------------
 #  # if (!require(remotes)) {install.packages('remotes')}
