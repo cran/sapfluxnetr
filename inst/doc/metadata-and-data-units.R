@@ -1,15 +1,15 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----describe_md_variable------------------------------------------------
+## ----describe_md_variable-----------------------------------------------------
 library(sapfluxnetr)
 describe_md_variable('si_elev')
 describe_md_variable('st_age')
 
-## ----md_vars_table, echo=FALSE, results='asis'---------------------------
+## ----md_vars_table, echo=FALSE, results='asis'--------------------------------
 suppressMessages(library(dplyr))
 library(magrittr)
 site_md_table <- sapfluxnetr:::.metadata_architecture() %>%
@@ -68,7 +68,7 @@ bind_rows(
   xtable::xtable(align = c('lcccc')) %>%
   print(type = 'html')
 
-## ----environmetal_vars_table, echo=FALSE, results='asis'-----------------
+## ----environmetal_vars_table, echo=FALSE, results='asis'----------------------
 tibble::tibble(
   Variable = c(
     'env_ta', 'env_rh', 'env_vpd', 'env_sw_in', 'env_ppfd', 'env_netrad',
@@ -90,7 +90,7 @@ tibble::tibble(
   xtable::xtable(align = c('lccc')) %>%
   print(type = 'html')
 
-## ----TIMESTAMP_var-------------------------------------------------------
+## ----TIMESTAMP_var------------------------------------------------------------
 library(dplyr)
 library(lubridate)
 
@@ -100,6 +100,6 @@ get_env_md(ARG_TRE) %>% pull(env_time_zone)
 # timezone in the TIMESTAMP
 get_timestamp(ARG_TRE) %>% tz()
 
-## ----solar_TIMESTAMP-----------------------------------------------------
+## ----solar_TIMESTAMP----------------------------------------------------------
 get_solar_timestamp(ARG_TRE) %>% tz()
 

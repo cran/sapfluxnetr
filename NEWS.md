@@ -1,3 +1,11 @@
+# sapfluxnetr 0.1.0
+
+* Removed `tidyverse` dependency from *suggests*.
+* Updated internal `.fixed_metrics_funs` to use formulas instead of quosures
+  on quantile metrics in the functions list, as the use of quosures here is
+  deprecated by newer dplyr versions.
+* First minor version, open data released
+
 # sapfluxnetr 0.0.7
 
 * Replaced calls of dplyr::funs with list (or rlang::list2 if splicing is needed)

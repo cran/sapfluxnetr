@@ -1,12 +1,11 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----memory_all, eval=FALSE----------------------------------------------
+## ----memory_all, eval=FALSE---------------------------------------------------
 #  library(sapfluxnetr)
-#  library(tidyverse)
 #  
 #  # This will need at least 5GB of memory during the process
 #  folder <- 'RData/plant'
@@ -23,9 +22,8 @@ knitr::opts_chunk$set(
 #  # Important to save, this way you will have access to the object in the future
 #  save(daily_results, file = 'daily_results.RData')
 
-## ----memory_steps, eval = FALSE------------------------------------------
+## ----memory_steps, eval = FALSE-----------------------------------------------
 #  library(sapfluxnetr)
-#  library(tidyverse)
 #  
 #  folder <- 'RData/plant'
 #  metadata <- read_sfn_metadata(folder)
@@ -52,7 +50,7 @@ knitr::opts_chunk$set(
 #  rm(daily_results_1, daily_results_2, daily_results_3, daily_results_4)
 #  save(daily_results_steps, file = 'daily_results_steps.RData')
 
-## ----parallelizations, eval = FALSE--------------------------------------
+## ----parallelizations, eval = FALSE-------------------------------------------
 #  # loading future package
 #  library(future)
 #  
@@ -71,7 +69,7 @@ knitr::opts_chunk$set(
 #  # Important to save, this way you will have access to the object in the future
 #  save(daily_results_parallel, file = 'daily_results_parallel.RData')
 
-## ----max_limit, eval = FALSE---------------------------------------------
+## ----max_limit, eval = FALSE--------------------------------------------------
 #  # future library
 #  library(future)
 #  

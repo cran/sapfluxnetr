@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ------------------------------------------------------------------------
+## ----custom_summ--------------------------------------------------------------
 # libraries
 library(sapfluxnetr)
 library(dplyr)
@@ -13,7 +13,7 @@ library(dplyr)
 # data
 data('ARG_TRE', package = 'sapfluxnetr')
 
-# summarising funs (built with quosure style lambdas list)
+# summarising funs (as a list of formulas)
 custom_funs <- list(mean = ~ mean(., na.rm = TRUE), std_dev = ~ sd(., na.rm = TRUE))
 
 # metrics
@@ -27,7 +27,7 @@ foo_simpler_metrics <- sfn_metrics(
 
 foo_simpler_metrics[['sapf']]
 
-## ------------------------------------------------------------------------
+## ----special_intervals--------------------------------------------------------
 foo_simpler_metrics_midday <- sfn_metrics(
   ARG_TRE,
   period = '1 day',
@@ -38,7 +38,7 @@ foo_simpler_metrics_midday <- sfn_metrics(
 
 foo_simpler_metrics_midday[['sapf']]
 
-## ------------------------------------------------------------------------
+## ----custom_aggregation-------------------------------------------------------
 # weekly
 foo_weekly <- sfn_metrics(
   ARG_TRE,
@@ -50,7 +50,7 @@ foo_weekly <- sfn_metrics(
 
 foo_weekly[['env']]
 
-## ------------------------------------------------------------------------
+## ----custom_aggregation_2-----------------------------------------------------
 foo_custom <- sfn_metrics(
   AUS_CAN_ST2_MIX,
   period = lubridate::quarter, # period is the name of the function now
@@ -60,7 +60,7 @@ foo_custom <- sfn_metrics(
   with_year = TRUE # argument for lubridate::quarter
 )
 
-## ------------------------------------------------------------------------
+## ----extra_params-------------------------------------------------------------
 foo_simpler_metrics_end <- sfn_metrics(
   ARG_TRE,
   period = '1 day',
@@ -72,7 +72,7 @@ foo_simpler_metrics_end <- sfn_metrics(
 
 foo_simpler_metrics_end[['sapf']]
 
-## ----timestamp_coll------------------------------------------------------
+## ----timestamp_coll-----------------------------------------------------------
 max_time <- function(x, time) {
   
   # x: vector of values for a day
