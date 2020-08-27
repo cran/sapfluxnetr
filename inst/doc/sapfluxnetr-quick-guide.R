@@ -25,15 +25,15 @@ library(ggplot2)
 ## ----downzip, eval = FALSE----------------------------------------------------
 #  # download the data
 #  download.file(
-#    url = "https://zenodo.org/record/3697807/files/0.1.4.zip?download=1",
-#    destfile = '0.1.4.zip'
+#    url = "https://zenodo.org/record/3971689/files/0.1.5.zip?download=1",
+#    destfile = '0.1.5.zip'
 #  )
 #  # unzip the data
 #  # BE SURE YOU HAVE AT LEAST 24GB OF DISK SPACE
-#  unzip("0.1.4.zip")
+#  unzip("0.1.5.zip")
 #  # check if files are present
-#  list.files(file.path('0.1.4', 'RData', 'plant'))
-#  list.files(file.path('0.1.4', 'csv', 'plant'))
+#  list.files(file.path('0.1.5', 'RData', 'plant'))
+#  list.files(file.path('0.1.5', 'csv', 'plant'))
 
 ## ----read_and_inspect, eval=FALSE---------------------------------------------
 #  # read the data
@@ -96,11 +96,13 @@ arg_maz_env_flags %>%
 
 ## ----sapf_plot, fig.width=6---------------------------------------------------
 sfn_plot(arg_maz, type = 'sapf', solar = TRUE) +
-  facet_wrap(~ Tree) + theme(legend.position = 'none')
+  facet_wrap(~ Tree) +
+  theme(legend.position = 'none')
 
 ## ----env_plot, fig.width=6, fig.height=4--------------------------------------
 sfn_plot(arg_maz, type = 'env', solar = TRUE) +
-  facet_wrap(~ Variable, scales = 'free_y') + theme(legend.position = 'none')
+  facet_wrap(~ Variable, scales = 'free_y') +
+  theme(legend.position = 'none')
 
 ## ----vpd_and_vs, fig.show='hold'----------------------------------------------
 # vpd individually
@@ -147,7 +149,7 @@ sites
 ## ----filtering_by_md, eval=FALSE----------------------------------------------
 #  temperate <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c('Mediterranean', 'Temperate forest'),
+#      si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
 #      metadata = sfn_metadata
 #    )
 #  
@@ -156,7 +158,7 @@ sites
 ## ----filtering_by_md_real, echo=FALSE, warning=FALSE--------------------------
 temperate <- sfn_sites_in_folder(folder) %>%
   filter_sites_by_md(
-    si_biome %in% c('Mediterranean', 'Temperate forest'),
+    si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
     metadata = sfn_metadata
   )
 temperate
@@ -164,7 +166,7 @@ temperate
 ## ----filters_combined, eval=FALSE---------------------------------------------
 #  temperate_hr <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c('Mediterranean', 'Temperate forest'),
+#      si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
 #      pl_sens_meth == 'HR',
 #      metadata = sfn_metadata
 #    )
@@ -174,7 +176,7 @@ temperate
 ## ----filters_combined_real, echo=FALSE, warning=FALSE-------------------------
 temperate_hr <- sfn_sites_in_folder(folder) %>%
   filter_sites_by_md(
-    si_biome %in% c('Mediterranean', 'Temperate forest'),
+    si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
     pl_sens_meth == 'HR',
     metadata = sfn_metadata
   )

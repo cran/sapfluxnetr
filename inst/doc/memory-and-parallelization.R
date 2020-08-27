@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 #  
 #  daily_results <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c("Temperate forest", 'Mediterranean'),
+#      si_biome %in% c("Temperate forest", 'Woodland/Shrubland'),
 #      sites = sites, metadata = sfn_metadata
 #    ) %>%
 #    read_sfn_data(folder) %>%
@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 #  metadata <- read_sfn_metadata(folder)
 #  sites <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c("Temperate forest", 'Mediterranean'),
+#      si_biome %in% c("Temperate forest", 'Woodland/Shrubland'),
 #      sites = sites, metadata = sfn_metadata
 #    )
 #  
@@ -60,7 +60,7 @@ knitr::opts_chunk$set(
 #  # metrics!!
 #  daily_results_parallel <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c("Temperate forest", 'Mediterranean'),
+#      si_biome %in% c("Temperate forest", 'Woodland/Shrubland'),
 #      sites = sites, metadata = sfn_metadata
 #    ) %>%
 #    read_sfn_data(folder) %>%
@@ -83,7 +83,7 @@ knitr::opts_chunk$set(
 #  # do the metrics
 #  daily_results_limit <- sfn_sites_in_folder(folder) %>%
 #    filter_sites_by_md(
-#      si_biome %in% c("Temperate forest", 'Mediterranean'),
+#      si_biome %in% c("Temperate forest", 'Woodland/Shrubland'),
 #      sites = sites, metadata = sfn_metadata
 #    ) %>%
 #    read_sfn_data(folder) %>%

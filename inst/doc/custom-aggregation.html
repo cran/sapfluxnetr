@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2020-05-11" />
+<meta name="date" content="2020-08-27" />
 
 <title>Custom aggregation</title>
 
@@ -315,11 +315,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Custom aggregation</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2020-05-11</h4>
+<h4 class="date">2020-08-27</h4>
 
 
 
-<p><code>sapfluxnetr</code> package offers a very flexible but powerful API based on the <code>tidyverse</code> packages to aggregate and summarise the site/s data in the form of the <code>sfn_metrics</code> function. All the metrics family of functions (<code>?metrics</code>) make use of the <code>sfn_metrics</code> funcion under the hood. If you want full control to the statistics returned and aggregation periods, we recommend you to use this API. This vignette will show you how.</p>
+<p><code>sapfluxnetr</code> package offers a very flexible but powerful API based on the <code>tidyverse</code> packages to aggregate and summarise the site/s data in the form of the <code>sfn_metrics</code> function. All the metrics family of functions (<code>?metrics</code>) make use of the <code>sfn_metrics</code> function under the hood. If you want full control to the statistics returned and aggregation periods, we recommend you to use this API. This vignette will show you how.</p>
 <div id="pre-fixed-summarising-functions" class="section level2">
 <h2>Pre-fixed summarising functions</h2>
 <ol style="list-style-type: decimal">
@@ -334,59 +334,59 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="custom-summarising-functions" class="section level2">
 <h2>Custom summarising functions</h2>
-<p><code>daily_metrics</code> and related functions return a complete set of metrics ready for use, but if you want simpler metrics and/or different metrics you can supply your own summarising functions using the <code>.funs</code> argument.<br />
+<p><code>daily_metrics</code> and related functions return a complete set of metrics ready for use, but if you want different metrics you can supply your own summarising functions using the <code>.funs</code> argument.<br />
 The correct way of specifying the functions to use is described in the <code>summarise_all</code> help (<code>?dplyr::summarise_all</code>). The recommended way is a list of formulas with the function call:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(sapfluxnetr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; </span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt; </span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt;     filter, lag</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; </span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">### only mean and sd at a daily scale</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># data</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">data</span>(<span class="st">&#39;ARG_TRE&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;sapfluxnetr&#39;</span>)</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># summarising funs (as a list of formulas)</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">mean =</span> <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">std_dev =</span> <span class="op">~</span><span class="st"> </span><span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co"># metrics</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>foo_simpler_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb1-22"><a href="#cb1-22"></a>  ARG_TRE,</span>
-<span id="cb1-23"><a href="#cb1-23"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
-<span id="cb1-24"><a href="#cb1-24"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb1-25"><a href="#cb1-25"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb1-26"><a href="#cb1-26"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>)</span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a></span>
-<span id="cb1-31"><a href="#cb1-31"></a>foo_simpler_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="co">#&gt;  1 2009-11-17 00:00:00             308.             173.             303.</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="co">#&gt;  2 2009-11-18 00:00:00             507.             376.             432.</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt;  3 2009-11-19 00:00:00             541.             380.             391.</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a><span class="co">#&gt;  4 2009-11-20 00:00:00             330.             218.             272.</span></span>
-<span id="cb1-39"><a href="#cb1-39"></a><span class="co">#&gt;  5 2009-11-21 00:00:00             338.             219.             278.</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a><span class="co">#&gt;  6 2009-11-22 00:00:00             384.             243.             310.</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a><span class="co">#&gt;  7 2009-11-23 00:00:00             492.             300.             390.</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a><span class="co">#&gt;  8 2009-11-24 00:00:00             573.             389.             497.</span></span>
-<span id="cb1-43"><a href="#cb1-43"></a><span class="co">#&gt;  9 2009-11-25 00:00:00             601.             400.             484.</span></span>
-<span id="cb1-44"><a href="#cb1-44"></a><span class="co">#&gt; 10 2009-11-26 00:00:00             502.             360.             450.</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a><span class="co">#&gt; 11 2009-11-27 00:00:00             544.             411.             506.</span></span>
-<span id="cb1-46"><a href="#cb1-46"></a><span class="co">#&gt; 12 2009-11-28 00:00:00             573.             451.             589.</span></span>
-<span id="cb1-47"><a href="#cb1-47"></a><span class="co">#&gt; 13 2009-11-29 00:00:00             371.             285.             357.</span></span>
-<span id="cb1-48"><a href="#cb1-48"></a><span class="co">#&gt; 14 2009-11-30 00:00:00             386.             293.             381.</span></span>
-<span id="cb1-49"><a href="#cb1-49"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
-<span id="cb1-50"><a href="#cb1-50"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
-<span id="cb1-51"><a href="#cb1-51"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">library</span>(sapfluxnetr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="co">### only mean and sd at a daily scale</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="co"># data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="kw">data</span>(<span class="st">&#39;ARG_TRE&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;sapfluxnetr&#39;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co"># summarising funs (as a list of formulas)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">mean =</span> <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">std_dev =</span> <span class="op">~</span><span class="st"> </span><span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="co"># metrics</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>foo_simpler_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>  ARG_TRE,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>foo_simpler_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a><span class="co">#&gt;  1 2009-11-17 00:00:00             308.             173.             303.</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a><span class="co">#&gt;  2 2009-11-18 00:00:00             507.             376.             432.</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a><span class="co">#&gt;  3 2009-11-19 00:00:00             541.             380.             391.</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a><span class="co">#&gt;  4 2009-11-20 00:00:00             330.             218.             272.</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a><span class="co">#&gt;  5 2009-11-21 00:00:00             338.             219.             278.</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a><span class="co">#&gt;  6 2009-11-22 00:00:00             384.             243.             310.</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a><span class="co">#&gt;  7 2009-11-23 00:00:00             492.             300.             390.</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a><span class="co">#&gt;  8 2009-11-24 00:00:00             573.             389.             497.</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a><span class="co">#&gt;  9 2009-11-25 00:00:00             601.             400.             484.</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a><span class="co">#&gt; 10 2009-11-26 00:00:00             502.             360.             450.</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a><span class="co">#&gt; 11 2009-11-27 00:00:00             544.             411.             506.</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a><span class="co">#&gt; 12 2009-11-28 00:00:00             573.             451.             589.</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a><span class="co">#&gt; 13 2009-11-29 00:00:00             371.             285.             357.</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a><span class="co">#&gt; 14 2009-11-30 00:00:00             386.             293.             381.</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
 <blockquote>
 <p>When supplying only one function to .funs, names of variables are not changed to contain the metric name at the end, as the summary function returns the same columns as the original data</p>
 </blockquote>
@@ -394,36 +394,36 @@ The correct way of specifying the functions to use is described in the <code>sum
 <div id="special-interest-intervals" class="section level2">
 <h2>Special interest intervals</h2>
 <p>You can also choose if the “special interest” intervals (predawn, midday, nighttime or daylight) are calculated or not. For example, if you are only interested in the midday interval you can use:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>foo_simpler_metrics_midday &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  ARG_TRE,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">interval =</span> <span class="st">&#39;midday&#39;</span>, <span class="dt">int_start =</span> <span class="dv">11</span>, <span class="dt">int_end =</span> <span class="dv">13</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; [1] &quot;midday data for ARG_TRE&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11"></a>foo_simpler_metrics_midday[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; # A tibble: 13 x 9</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;    TIMESTAMP_md        ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             685.             665.             614.</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt;  2 2009-11-19 00:00:00             879.             594.             626.</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt;  3 2009-11-20 00:00:00             438.             272.             258.</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt;  4 2009-11-21 00:00:00             631.             379.             533.</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt;  5 2009-11-22 00:00:00             783.             535.             680.</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt;  6 2009-11-23 00:00:00             841.             478.             618.</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;  7 2009-11-24 00:00:00             951.             636.             789.</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;  8 2009-11-25 00:00:00             907.             602.             789.</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt;  9 2009-11-26 00:00:00             861.             697.             925.</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; 10 2009-11-27 00:00:00             806.             594.             706.</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; 11 2009-11-28 00:00:00             837.             730.             925.</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; 12 2009-11-29 00:00:00             638.             605.             666.</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; 13 2009-11-30 00:00:00             548.             371.             444.</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean_md &lt;dbl&gt;,</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev_md &lt;dbl&gt;,</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev_md &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>foo_simpler_metrics_midday &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  ARG_TRE,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;midday&#39;</span>, <span class="dt">int_start =</span> <span class="dv">11</span>, <span class="dt">int_end =</span> <span class="dv">13</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;midday data for ARG_TRE&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>foo_simpler_metrics_midday[[<span class="st">&#39;sapf&#39;</span>]]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 13 x 9</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt;    TIMESTAMP_md        ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             685.             665.             614.</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt;  2 2009-11-19 00:00:00             879.             594.             626.</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="co">#&gt;  3 2009-11-20 00:00:00             438.             272.             258.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="co">#&gt;  4 2009-11-21 00:00:00             631.             379.             533.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="co">#&gt;  5 2009-11-22 00:00:00             783.             535.             680.</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="co">#&gt;  6 2009-11-23 00:00:00             841.             478.             618.</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="co">#&gt;  7 2009-11-24 00:00:00             951.             636.             789.</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="co">#&gt;  8 2009-11-25 00:00:00             907.             602.             789.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="co">#&gt;  9 2009-11-26 00:00:00             861.             697.             925.</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a><span class="co">#&gt; 10 2009-11-27 00:00:00             806.             594.             706.</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="co">#&gt; 11 2009-11-28 00:00:00             837.             730.             925.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a><span class="co">#&gt; 12 2009-11-29 00:00:00             638.             605.             666.</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="co">#&gt; 13 2009-11-30 00:00:00             548.             371.             444.</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean_md &lt;dbl&gt;,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev_md &lt;dbl&gt;,</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev_md &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev_md &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="custom-aggregation-periods" class="section level2">
 <h2>Custom aggregation periods</h2>
@@ -431,47 +431,61 @@ The correct way of specifying the functions to use is described in the <code>sum
 <ul>
 <li>“frequency period” format, where frequency is a number and period is an interval as character (i.e. “1 year”, “7 days”)</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># weekly</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>foo_weekly &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  ARG_TRE,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">period =</span> <span class="st">&#39;7 days&#39;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a>foo_weekly[[<span class="st">&#39;env&#39;</span>]]</span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; # A tibble: 3 x 19</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;   TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean precip_mean</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; 1 2009-11-15 00:00:00    4.81    35.3    0.598       280.    15.5     0.00612</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; 2 2009-11-22 00:00:00    6.15    35.3    0.656       327.    24.5     0.192  </span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; 3 2009-11-29 00:00:00    2.55    40.9    0.453       261.    23.1     0.122  </span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; # … with 12 more variables: swc_shallow_mean &lt;dbl&gt;, ppfd_in_mean &lt;dbl&gt;,</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; #   ext_rad_mean &lt;dbl&gt;, ta_std_dev &lt;dbl&gt;, rh_std_dev &lt;dbl&gt;, vpd_std_dev &lt;dbl&gt;,</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; #   sw_in_std_dev &lt;dbl&gt;, ws_std_dev &lt;dbl&gt;, precip_std_dev &lt;dbl&gt;,</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; #   swc_shallow_std_dev &lt;dbl&gt;, ppfd_in_std_dev &lt;dbl&gt;, ext_rad_std_dev &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># weekly</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>foo_weekly &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  ARG_TRE,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="dt">period =</span> <span class="st">&#39;7 days&#39;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>foo_weekly[[<span class="st">&#39;env&#39;</span>]]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 3 x 19</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co">#&gt;   TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean precip_mean</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="co">#&gt; 1 2009-11-15 00:00:00    4.81    35.3    0.598       280.    15.5     0.00612</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="co">#&gt; 2 2009-11-22 00:00:00    6.15    35.3    0.656       327.    24.5     0.192  </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="co">#&gt; 3 2009-11-29 00:00:00    2.55    40.9    0.453       261.    23.1     0.122  </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co">#&gt; # … with 12 more variables: swc_shallow_mean &lt;dbl&gt;, ppfd_in_mean &lt;dbl&gt;,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co">#&gt; #   ext_rad_mean &lt;dbl&gt;, ta_std_dev &lt;dbl&gt;, rh_std_dev &lt;dbl&gt;, vpd_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">#&gt; #   sw_in_std_dev &lt;dbl&gt;, ws_std_dev &lt;dbl&gt;, precip_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co">#&gt; #   swc_shallow_std_dev &lt;dbl&gt;, ppfd_in_std_dev &lt;dbl&gt;, ext_rad_std_dev &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
 <li>A custom function name (without quotes). This way you can build irregular or custom periods. This function first argument must always be the timestamp to be collapsed, and can have other arguments that will be supplied in the dots (<code>...</code>) argument of <code>sfn_metrics</code>. Also, this function always must return a vector of timestamps of the same length as the original timestamp.<br />
 For example, if you want to summarise by quarters we can use the <code>quarter</code> function from the lubridate package:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>foo_custom &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  AUS_CAN_ST2_MIX,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">period =</span> lubridate<span class="op">::</span>quarter, <span class="co"># period is the name of the function now</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</span>
-<span id="cb4-7"><a href="#cb4-7"></a>  <span class="dt">with_year =</span> <span class="ot">TRUE</span> <span class="co"># argument for lubridate::quarter</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>)</span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; [1] &quot;Crunching data for AUS_CAN_ST2_MIX. In large datasets this could take a while&quot;</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;             can be less accurate</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;             can be less accurate</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>foo_custom &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  AUS_CAN_ST2_MIX,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  <span class="dt">period =</span> lubridate<span class="op">::</span>quarter,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  <span class="dt">with_year =</span> <span class="ot">TRUE</span> <span class="co"># argument for lubridate::quarter</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for AUS_CAN_ST2_MIX. In large datasets this could take a while&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="co">#&gt;             can be less accurate</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">#&gt; Warning in .period_to_minutes(period, .data$TIMESTAMP, unique(.data$timestep)): when using a custom function as period, coverage calculation</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">#&gt;             can be less accurate</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>foo_custom[<span class="st">&#39;env&#39;</span>]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="co">#&gt; $env</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 5 x 17</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">#&gt;   TIMESTAMP ta_mean vpd_mean sw_in_mean ws_mean precip_mean ppfd_in_mean rh_mean</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a><span class="co">#&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a><span class="co">#&gt; 1     2006.    8.48    0.106       25.4   0.161      0.0158         53.7    93.1</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a><span class="co">#&gt; 2     2006.   10.5     0.278       82.0   0.318      0.0399        173.     86.9</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a><span class="co">#&gt; 3     2006.   16.6     0.826      219.    0.581      0.0200        463.     72.8</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a><span class="co">#&gt; 4     2007.   20.9     0.985      197.    0.439      0.0333        416.     75.7</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a><span class="co">#&gt; 5     2007.   15.8     0.386      110.    0.200      0.0181        231.     86.7</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a><span class="co">#&gt; # … with 9 more variables: ext_rad_mean &lt;dbl&gt;, ta_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a><span class="co">#&gt; #   vpd_std_dev &lt;dbl&gt;, sw_in_std_dev &lt;dbl&gt;, ws_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a><span class="co">#&gt; #   precip_std_dev &lt;dbl&gt;, ppfd_in_std_dev &lt;dbl&gt;, rh_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a><span class="co">#&gt; #   ext_rad_std_dev &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="extra-parameters" class="section level2">
 <h2>Extra parameters</h2>
@@ -485,38 +499,38 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 <li><p><code>dplyr::summarise_all</code> accepts extra arguments intended to be applied to the summarising functions provided (to <strong>all</strong>, so they all must have the argument provided or an error will be raised). That’s the reason because we recommend to use the list way, as the arguments are specified for the individual functions.</p></li>
 </ol>
 <p>For example, if we want the TIMESTAMPs after aggregation to show the end of the period instead the begining (default) we can do the following:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>foo_simpler_metrics_end &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  ARG_TRE,</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="dt">side =</span> <span class="st">&quot;end&quot;</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>)</span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>foo_simpler_metrics_end[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             308.             173.             303.</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  2 2009-11-19 00:00:00             507.             376.             432.</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  3 2009-11-20 00:00:00             541.             380.             391.</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt;  4 2009-11-21 00:00:00             330.             218.             272.</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt;  5 2009-11-22 00:00:00             338.             219.             278.</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt;  6 2009-11-23 00:00:00             384.             243.             310.</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt;  7 2009-11-24 00:00:00             492.             300.             390.</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt;  8 2009-11-25 00:00:00             573.             389.             497.</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt;  9 2009-11-26 00:00:00             601.             400.             484.</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; 10 2009-11-27 00:00:00             502.             360.             450.</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; 11 2009-11-28 00:00:00             544.             411.             506.</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt; 12 2009-11-29 00:00:00             573.             451.             589.</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; 13 2009-11-30 00:00:00             371.             285.             357.</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt; 14 2009-12-01 00:00:00             386.             293.             381.</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>foo_simpler_metrics_end &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  ARG_TRE,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>  <span class="dt">side =</span> <span class="st">&quot;end&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>foo_simpler_metrics_end[[<span class="st">&#39;sapf&#39;</span>]]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             308.             173.             303.</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="co">#&gt;  2 2009-11-19 00:00:00             507.             376.             432.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="co">#&gt;  3 2009-11-20 00:00:00             541.             380.             391.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="co">#&gt;  4 2009-11-21 00:00:00             330.             218.             272.</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="co">#&gt;  5 2009-11-22 00:00:00             338.             219.             278.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="co">#&gt;  6 2009-11-23 00:00:00             384.             243.             310.</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="co">#&gt;  7 2009-11-24 00:00:00             492.             300.             390.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="co">#&gt;  8 2009-11-25 00:00:00             573.             389.             497.</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="co">#&gt;  9 2009-11-26 00:00:00             601.             400.             484.</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="co">#&gt; 10 2009-11-27 00:00:00             502.             360.             450.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="co">#&gt; 11 2009-11-28 00:00:00             544.             411.             506.</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="co">#&gt; 12 2009-11-29 00:00:00             573.             451.             589.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="co">#&gt; 13 2009-11-30 00:00:00             371.             285.             357.</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="co">#&gt; 14 2009-12-01 00:00:00             386.             293.             381.</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
 <p>If it is compared with the <code>foo_simpler_metrics</code> calculated before, now the period is identified in the TIMESTAMP by the ending of the period (daily in this case).</p>
 <blockquote>
 <p>When supplying custom functions as “period” argument, the default coverage statistic is not reliable as there is no way of knowing beforehand the period/s in minutes.</p>
@@ -529,54 +543,54 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 <h3><code>TIMESTAMP_coll</code></h3>
 <p>When aggregating by the declared period (i.e. <code>&quot;daily&quot;</code>), the TIMESTAMP column collapses to the period start/end value (meaning that all the TIMESTAMP values for the same day becomes identical).<br />
 This makes impossible to use any summarise functions that obtain the time of the day at which one event happens (i.e. time of the day at which the maximum sap flow occurs) because all TIMESTAMP values are identical. For that kind of summarising functions, a transitory column called <code>TIMESTAMP_coll</code> is created. So in this case we can create a function that takes de variable values for the day, the TIMESTAMP_coll values for the day and return the TIMESTAMP at which the max sap flow occurs and use it with <code>sfn_metrics</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>max_time &lt;-<span class="st"> </span><span class="cf">function</span>(x, time) {</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  </span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="co"># x: vector of values for a day</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="co"># time: TIMESTAMP for the day </span></span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a>  <span class="co"># if all the values in x are NAs (a daily summmarise of no measures day for</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>  <span class="co"># example) this will return a length 0 POSIXct vector, which will crash</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  <span class="co"># dplyr summarise step. So, check if all NA and if true return NA as POSIXct</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>  <span class="cf">if</span>(<span class="kw">all</span>(<span class="kw">is.na</span>(x))) {</span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="kw">return</span>(<span class="kw">as.POSIXct</span>(<span class="ot">NA</span>, <span class="dt">tz =</span> <span class="kw">attr</span>(time, <span class="st">&#39;tz&#39;</span>), <span class="dt">origin =</span> lubridate<span class="op">::</span>origin))</span>
-<span id="cb6-11"><a href="#cb6-11"></a>  } <span class="cf">else</span> {</span>
-<span id="cb6-12"><a href="#cb6-12"></a>    time[<span class="kw">which.max</span>(x)]</span>
-<span id="cb6-13"><a href="#cb6-13"></a>  }</span>
-<span id="cb6-14"><a href="#cb6-14"></a>}</span>
-<span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a>custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">max =</span> <span class="op">~</span><span class="st"> </span><span class="kw">max</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="op">~</span><span class="st"> </span><span class="kw">max_time</span>(., TIMESTAMP_coll))</span>
-<span id="cb6-17"><a href="#cb6-17"></a></span>
-<span id="cb6-18"><a href="#cb6-18"></a>max_time_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
-<span id="cb6-19"><a href="#cb6-19"></a>  ARG_TRE,</span>
-<span id="cb6-20"><a href="#cb6-20"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
-<span id="cb6-21"><a href="#cb6-21"></a>  <span class="dt">.funs =</span> custom_funs,</span>
-<span id="cb6-22"><a href="#cb6-22"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb6-23"><a href="#cb6-23"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a>)</span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
-<span id="cb6-26"><a href="#cb6-26"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a></span>
-<span id="cb6-28"><a href="#cb6-28"></a>max_time_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb6-29"><a href="#cb6-29"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
-<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb6-32"><a href="#cb6-32"></a><span class="co">#&gt;  1 2009-11-17 00:00:00             322.             190.             313.</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt;  2 2009-11-18 00:00:00             778.             715.             679.</span></span>
-<span id="cb6-34"><a href="#cb6-34"></a><span class="co">#&gt;  3 2009-11-19 00:00:00            1015.             694.             633.</span></span>
-<span id="cb6-35"><a href="#cb6-35"></a><span class="co">#&gt;  4 2009-11-20 00:00:00             648.             401.             442.</span></span>
-<span id="cb6-36"><a href="#cb6-36"></a><span class="co">#&gt;  5 2009-11-21 00:00:00             664.             406.             539.</span></span>
-<span id="cb6-37"><a href="#cb6-37"></a><span class="co">#&gt;  6 2009-11-22 00:00:00             812.             564.             816.</span></span>
-<span id="cb6-38"><a href="#cb6-38"></a><span class="co">#&gt;  7 2009-11-23 00:00:00            1085.             676.             935.</span></span>
-<span id="cb6-39"><a href="#cb6-39"></a><span class="co">#&gt;  8 2009-11-24 00:00:00             992.             736.            1115.</span></span>
-<span id="cb6-40"><a href="#cb6-40"></a><span class="co">#&gt;  9 2009-11-25 00:00:00             976.             646.             951.</span></span>
-<span id="cb6-41"><a href="#cb6-41"></a><span class="co">#&gt; 10 2009-11-26 00:00:00             932.             766.            1087.</span></span>
-<span id="cb6-42"><a href="#cb6-42"></a><span class="co">#&gt; 11 2009-11-27 00:00:00             862.             704.             921.</span></span>
-<span id="cb6-43"><a href="#cb6-43"></a><span class="co">#&gt; 12 2009-11-28 00:00:00             845.             763.            1165.</span></span>
-<span id="cb6-44"><a href="#cb6-44"></a><span class="co">#&gt; 13 2009-11-29 00:00:00             714.             747.             701.</span></span>
-<span id="cb6-45"><a href="#cb6-45"></a><span class="co">#&gt; 14 2009-11-30 00:00:00             875.             646.             919.</span></span>
-<span id="cb6-46"><a href="#cb6-46"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;,</span></span>
-<span id="cb6-47"><a href="#cb6-47"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_2_max_time &lt;dttm&gt;,</span></span>
-<span id="cb6-48"><a href="#cb6-48"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_4_max_time &lt;dttm&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>max_time &lt;-<span class="st"> </span><span class="cf">function</span>(x, time) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="co"># x: vector of values for a day</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>  <span class="co"># time: TIMESTAMP for the day </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  <span class="co"># if all the values in x are NAs (a daily summmarise of no measures day for</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  <span class="co"># example) this will return a length 0 POSIXct vector, which will crash</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  <span class="co"># dplyr summarise step. So, check if all NA and if true return NA as POSIXct</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">all</span>(<span class="kw">is.na</span>(x))) {</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>    <span class="kw">return</span>(<span class="kw">as.POSIXct</span>(<span class="ot">NA</span>, <span class="dt">tz =</span> <span class="kw">attr</span>(time, <span class="st">&#39;tz&#39;</span>), <span class="dt">origin =</span> lubridate<span class="op">::</span>origin))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>    time[<span class="kw">which.max</span>(x)]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>  }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>}</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>custom_funs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">max =</span> <span class="op">~</span><span class="st"> </span><span class="kw">max</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="op">~</span><span class="st"> </span><span class="kw">max_time</span>(., TIMESTAMP_coll))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>max_time_metrics &lt;-<span class="st"> </span><span class="kw">sfn_metrics</span>(</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>  ARG_TRE,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>  <span class="dt">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a>  <span class="dt">.funs =</span> custom_funs,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a>  <span class="dt">solar =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a>  <span class="dt">interval =</span> <span class="st">&#39;general&#39;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Crunching data for ARG_TRE. In large datasets this could take a while&quot;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a>max_time_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_… ARG_TRE_Nan_Jt_…</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a><span class="co">#&gt;  1 2009-11-17 00:00:00             322.             190.             313.</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a><span class="co">#&gt;  2 2009-11-18 00:00:00             778.             715.             679.</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a><span class="co">#&gt;  3 2009-11-19 00:00:00            1015.             694.             633.</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a><span class="co">#&gt;  4 2009-11-20 00:00:00             648.             401.             442.</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a><span class="co">#&gt;  5 2009-11-21 00:00:00             664.             406.             539.</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a><span class="co">#&gt;  6 2009-11-22 00:00:00             812.             564.             816.</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true"></a><span class="co">#&gt;  7 2009-11-23 00:00:00            1085.             676.             935.</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true"></a><span class="co">#&gt;  8 2009-11-24 00:00:00             992.             736.            1115.</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true"></a><span class="co">#&gt;  9 2009-11-25 00:00:00             976.             646.             951.</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true"></a><span class="co">#&gt; 10 2009-11-26 00:00:00             932.             766.            1087.</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true"></a><span class="co">#&gt; 11 2009-11-27 00:00:00             862.             704.             921.</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true"></a><span class="co">#&gt; 12 2009-11-28 00:00:00             845.             763.            1165.</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true"></a><span class="co">#&gt; 13 2009-11-29 00:00:00             714.             747.             701.</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true"></a><span class="co">#&gt; 14 2009-11-30 00:00:00             875.             646.             919.</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;,</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_2_max_time &lt;dttm&gt;,</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_4_max_time &lt;dttm&gt;</span></span></code></pre></div>
 </div>
 </div>
 

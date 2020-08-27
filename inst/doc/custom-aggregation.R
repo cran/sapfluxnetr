@@ -53,12 +53,13 @@ foo_weekly[['env']]
 ## ----custom_aggregation_2-----------------------------------------------------
 foo_custom <- sfn_metrics(
   AUS_CAN_ST2_MIX,
-  period = lubridate::quarter, # period is the name of the function now
+  period = lubridate::quarter,
   .funs = custom_funs,
   solar = TRUE,
   interval = 'general',
   with_year = TRUE # argument for lubridate::quarter
 )
+foo_custom['env']
 
 ## ----extra_params-------------------------------------------------------------
 foo_simpler_metrics_end <- sfn_metrics(

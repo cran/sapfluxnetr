@@ -1,3 +1,11 @@
+# sapfluxnetr 0.1.1
+
+* Remove `tidyr::gather` and `tidyr::spread` calls, replacing them with the now
+  recommended `tidyr::pivot_longer` and `tidyr::pivot_wide` calls.
+* Following the new database available, *"Mediterranean"* biome is replaced
+  by *"Woodland/Shrubland"* in all vignettes and function examples where it was
+  used.
+
 # sapfluxnetr 0.1.0
 
 * Removed `tidyverse` dependency from *suggests*.

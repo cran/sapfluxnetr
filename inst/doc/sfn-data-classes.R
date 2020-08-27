@@ -84,7 +84,7 @@ multi_sfn <- sfn_data_multi(ARG_TRE, ARG_MAZ, AUS_CAN_ST2_MIX)
 multi_sfn
 
 ## ----get_multi----------------------------------------------------------------
-# get sapflow data
+# get sap flow data
 get_sapf_data(multi_sfn)
 # get plant metadata
 get_plant_md(multi_sfn)
