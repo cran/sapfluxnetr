@@ -1,6 +1,6 @@
 Package: sapfluxnetr
 Title: Working with 'Sapfluxnet' Project Data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
   person("Victor", "Granda", email = "victorgrandagarcia@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0469-1991")),
   person("Rafael", "Poyatos", email = "r.poyatos@creaf.uab.cat", role = "aut", comment = c(ORCID = "0000-0003-0521-2523")),
@@ -25,7 +25,7 @@ VignetteBuilder: knitr
 URL: https://github.com/sapfluxnet/sapfluxnetr
 BugReports: https://github.com/sapfluxnet/sapfluxnetr/issues
 NeedsCompilation: no
-Packaged: 2020-08-27 07:23:45 UTC; malditobarbudo
+Packaged: 2021-10-04 07:23:23 UTC; malditobarbudo
 Author: Victor Granda [aut, cre] (<https://orcid.org/0000-0002-0469-1991>),
   Rafael Poyatos [aut] (<https://orcid.org/0000-0003-0521-2523>),
   Victor Flo [aut] (<https://orcid.org/0000-0003-1908-4577>),
@@ -33,4 +33,4 @@ Author: Victor Granda [aut, cre] (<https://orcid.org/0000-0002-0469-1991>),
   Sapfluxnet Core Team [cph]
 Maintainer: Victor Granda <victorgrandagarcia@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-08-27 12:50:02 UTC
+Date/Publication: 2021-10-04 07:40:02 UTC

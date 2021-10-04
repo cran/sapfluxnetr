@@ -101,3 +101,16 @@ max_time_metrics <- sfn_metrics(
 
 max_time_metrics[['sapf']]
 
+## ----subdaily_periods---------------------------------------------------------
+custom_funs <- list(max = ~ max(., na.rm = TRUE))
+
+three_hours_agg <- sfn_metrics(
+  ARG_TRE,
+  period = '3 hours',
+  .funs = custom_funs,
+  solar = TRUE,
+  interval = 'general'
+)
+
+three_hours_agg[['sapf']]
+

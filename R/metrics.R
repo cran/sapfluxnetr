@@ -146,7 +146,7 @@ summarise_by_period <- function(data, period, .funs, ...) {
 #' \code{period} argument is used by internal function
 #' \code{\link{.collapse_timestamp}} and it can be stated in two ways:
 #' \itemize{
-#'   \item{\emph{frequency period} format: "1 day", "7 days", "1 month", "3 hours"}
+#'   \item{\emph{frequency period} format: "3 hours", "1 day", "7 days", "1 month"}
 #'   \item{As a \emph{custom function}. This will be the name of a function,
 #'   without quotes, that accepts as the first argument the timestamp to collapse.
 #'   The result of the function must be a vector of collapsed TIMESTAMPs of the
@@ -187,7 +187,7 @@ summarise_by_period <- function(data, period, .funs, ...) {
 #'   to obtain the metrics from
 #'
 #' @param period Time period to aggregate data by. See period section for an
-#'   explanation about the periods ('1 day', '1 month', '1 year', ...)
+#'   explanation about the periods ('3 hours', '1 day', '1 month', '1 year', ...)
 #'
 #' @param .funs List of function calls to summarise the data by, see .funs
 #'   section for more details.
@@ -516,6 +516,21 @@ sfn_metrics <- function(
 #'
 #' generates a call to list to capture the fixed metrics in a quosure lambda
 #' style
+#' 
+#' @section Metrics:
+#' Calculated metrics are as follow:
+#' 
+#' \itemize{
+#'   \item{mean: Mean value for the selected period}
+#'   \item{sd: Standard deviation for the selected period}
+#'   \item{coverage: Percentage of coverage as the percentage of no NAs in the
+#'   expected legth of the period, stated by the site timestep}
+#'   \item{q*: q95 by default. Quantile value for the selected period. Quantiles to
+#'   calculate are stated in the probs argument}
+#'   \item{accumulated: Accumulated value on the selected period}
+#'   \item{centroid: daily centroid value in the selected period, calculated
+#'   only if centroid argument is TRUE}
+#' }
 #'
 #' @param probs probs vector for quantile
 #'
