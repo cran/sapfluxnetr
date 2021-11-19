@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>Memory and Parallelization</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Memory and Parallelization</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
@@ -194,9 +194,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="parallelization" class="section level2">
 <h2>Parallelization</h2>
-<p><code>sapfluxnetr</code> includes tha capability to parallelize the metrics calculation when performed on a <code>sfn_data_multi</code> object. This is made thanks to the <a href="https://github.com/DavisVaughan/furrr">furrr</a> package, which uses the <a href="https://github.com/HenrikBengtsson/future">future</a> package behind the scenes. By default, the code will run in a sequential process, which is the usual way the R code runs. But setting the <code>future::plan</code> to <code>multicore</code> (in Linux), <code>multisession</code> (in Windows) or <code>multiprocess</code> (automatically choose between the previous plans depending on the system) will run the code in parallel, dividing the sites between the available cores.</p>
+<p><code>sapfluxnetr</code> includes the capability to parallelize the metrics calculation when performed on a <code>sfn_data_multi</code> object. This is made thenks to the <a href="https://github.com/DavisVaughan/furrr">furrr</a> package, which uses the <a href="https://github.com/HenrikBengtsson/future">future</a> package behind the scenes. By default, the code will run in a sequential process, which is the usual way the R code runs. But setting the <code>future::plan</code> to <code>multicore</code> (in Linux), <code>multisession</code> (in Windows) or <code>multiprocess</code> (automatically choose between the previous plans depending on the system) will run the code in parallel, dividing the sites between the available cores.</p>
 <pre><code>&gt; Be advised, parallelization usually means more RAM used, so in systems
-  with less than 16GB maybe is not a good idea.
+  with less then 16GB maybe is not a good idea.
   Also, the time benefits start to show when analysing 10 sites or more.</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading future package</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>

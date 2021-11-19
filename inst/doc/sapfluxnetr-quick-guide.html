@@ -12,7 +12,7 @@
 
 <meta name="author" content="Víctor Granda (SAPFLUXNET Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>sapfluxnetr (Not So) Quick Guide</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">sapfluxnetr (Not So) Quick Guide</h1>
 <h4 class="author">Víctor Granda (SAPFLUXNET Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
@@ -165,7 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="download-the-data" class="section level2">
 <h2>Download the data</h2>
 <blockquote>
-<p><em>.zip</em> file is about 3GB. Unzipped folders use about 24GB of disk space. Please check that you have enough space available before downloading and unzipping the files.</p>
+<p><em>.zip</em> file is about 3GB. Unzipped folders use about 24GB of disk space. Please check thet you have enough space available before downloading and unzipping the files.</p>
 </blockquote>
 <div id="zenodo" class="section level3">
 <h3>Zenodo</h3>
@@ -182,9 +182,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">file.path</span>(<span class="st">&#39;0.1.5&#39;</span>, <span class="st">&#39;RData&#39;</span>, <span class="st">&#39;plant&#39;</span>))</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">file.path</span>(<span class="st">&#39;0.1.5&#39;</span>, <span class="st">&#39;csv&#39;</span>, <span class="st">&#39;plant&#39;</span>))</span></code></pre></div>
 </div>
-<div id="sapfluxnet-data-estructure" class="section level3">
-<h3>SAPFLUXNET Data estructure</h3>
-<p>SAPFLUXNET database estrucuture is as follows:</p>
+<div id="sapfluxnet-data-structure" class="section level3">
+<h3>SAPFLUXNET Data structure</h3>
+<p>SAPFLUXNET database structure is as follows:</p>
 <pre><code>0.1.5 (database version number)
   |
   |-- RData
@@ -219,10 +219,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="inspecting-a-site" class="section level2">
 <h2>Inspecting a site</h2>
-<p>First, let’s get used to the data structure that SAPFLUXNET provides, and for that we will choose a site and start playing with it.</p>
+<p>First, let’s get used to the data structure thet SAPFLUXNET provides, and for thet we will choose a site and start playing with it.</p>
 <div id="loading-a-site" class="section level3">
 <h3>Loading a site</h3>
-<p>In this example we will use the <code>ARG_MAZ</code> site, as it is small and it will be fast seeing the package capabilities. There are sites like <code>FRA_PUE</code> 100 times bigger than this, but as one can imagine, the time is also increasing when analyzing those bigger datasets.<br />
+<p>In this example we will use the <code>ARG_MAZ</code> site, as it is small and it will be fast seeing the package capabilities. There are sites like <code>FRA_PUE</code> 100 times bigger then this, but as one can imagine, the time is also increasing when analyzing those bigger datasets.<br />
 So, let’s read the data in the environment:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read the data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>arg_maz <span class="ot">&lt;-</span> <span class="fu">read_sfn_data</span>(<span class="st">&#39;ARG_MAZ&#39;</span>, <span class="at">folder =</span> <span class="st">&#39;RData/plant&#39;</span>)</span>
@@ -256,7 +256,7 @@ So, let’s read the data in the environment:</p>
 #&gt; Environmental data flags:
 #&gt; RANGE_WARN   OUT_WARN CALCULATED 
 #&gt;          9         17        576</code></pre>
-<p>At first glance, we know by this summary that is an Argentinian forest (first three letters of the site code are always the country code), contributed by Sebastian Pfautsch and Pablo Peri with 5 <em>Nothofagus pumilio</em> trees measured along 15 days in 2009. Also we can see the environmental variables measured (<code>ta</code>, <code>rh</code>, <code>vpd</code>, <code>sw_in</code>, <code>ws</code>, <code>precip</code>, <code>swc_shallow</code>, <code>ppfd_in</code> and <code>ext_rad</code>) and the biome classification. Finally, we can see that the environmental data has some flags (more on that later).</p>
+<p>At first glance, we know by this summary thet is an Argentinian forest (first three letters of the site code are always the country code), contributed by Sebastian Pfautsch and Pablo Peri with 5 <em>Nothofagus pumilio</em> trees measured along 15 days in 2009. Also we can see the environmental variables measured (<code>ta</code>, <code>rh</code>, <code>vpd</code>, <code>sw_in</code>, <code>ws</code>, <code>precip</code>, <code>swc_shallow</code>, <code>ppfd_in</code> and <code>ext_rad</code>) and the biome classification. Finally, we can see thet the environmental data has some flags (more on thet later).</p>
 </div>
 <div id="accessing-the-data-and-the-metadata" class="section level3">
 <h3>Accessing the data and the metadata</h3>
@@ -264,7 +264,7 @@ So, let’s read the data in the environment:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sapf data with original site timestamp</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>arg_maz_sapf <span class="ot">&lt;-</span> <span class="fu">get_sapf_data</span>(arg_maz, <span class="at">solar =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>arg_maz_sapf</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 x 6</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 × 6</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_MAZ_Npu_Jt_1 ARG_MAZ_Npu_Jt_2 ARG_MAZ_Npu_Jt_3</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-19 00:00:00            1955.             754.             742.</span></span>
@@ -283,7 +283,7 @@ So, let’s read the data in the environment:</p>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># env_data with calculated aparent solar time</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>arg_maz_env <span class="ot">&lt;-</span> <span class="fu">get_env_data</span>(arg_maz, <span class="at">solar =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>arg_maz_env</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 x 10</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 × 10</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP              ta    rh   vpd sw_in    ws precip swc_shallow ppfd_in</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 22:24:18  4.99  55.6 0.387     0  12.9    0         0.359    0   </span></span>
@@ -297,14 +297,14 @@ So, let’s read the data in the environment:</p>
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-19 06:24:02  4.15  52.8 0.388    78   9.7    0         0.356  165.  </span></span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-19 07:24:02  5.4   43.2 0.509   275  11.3    0         0.355  581.  </span></span>
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 278 more rows, and 1 more variable: ext_rad &lt;dbl&gt;</span></span></code></pre></div>
-<p>You can see that the TIMESTAMP variable changes between both kinds of data. That is because the TIMESTAMP returned is controlled by the <code>solar</code> parameter (see <code>?sfn_get_methods</code>).</p>
+<p>You can see thet the TIMESTAMP variable changes between both kinds of data. That is because the TIMESTAMP returned is controlled by the <code>solar</code> parameter (see <code>?sfn_get_methods</code>).</p>
 <p>Metadata can be accessed in the same way:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>arg_maz_site_md <span class="ot">&lt;-</span> <span class="fu">get_site_md</span>(arg_maz)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>arg_maz_site_md</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 24</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si_addcontr_email si_addcontr_fir… si_addcontr_insti… si_addcontr_las… si_code</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;  </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 &lt;NA&gt;              Pablo            Instituto Naciona… Peri             ARG_MAZ</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 24</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si_addcontr_email si_addcontr_firs… si_addcontr_inst… si_addcontr_las… si_code</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;  </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 &lt;NA&gt;              Pablo             Instituto Nacion… Peri             ARG_MAZ</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: si_contact_email &lt;chr&gt;, si_contact_firstname &lt;chr&gt;,</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_contact_institution &lt;chr&gt;, si_contact_lastname &lt;chr&gt;, si_country &lt;chr&gt;,</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_dendro_network &lt;lgl&gt;, si_dist_mgmt &lt;chr&gt;, si_elev &lt;int&gt;,</span></span>
@@ -313,7 +313,7 @@ So, let’s read the data in the environment:</p>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_mat &lt;dbl&gt;, si_map &lt;dbl&gt;, si_biome &lt;chr&gt;</span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>arg_maz_stand_md <span class="ot">&lt;-</span> <span class="fu">get_stand_md</span>(arg_maz)</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>arg_maz_stand_md</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 18</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 18</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   st_age st_aspect st_basal_area st_clay_perc st_density st_growth_condition    </span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;             &lt;int&gt; &lt;chr&gt;                  </span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    180 E                  59.1 NA                  518 Naturally regenerated,…</span></span>
@@ -323,13 +323,13 @@ So, let’s read the data in the environment:</p>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_treatment &lt;lgl&gt;, si_code &lt;chr&gt;, st_USDA_soil_texture &lt;chr&gt;</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>arg_maz_species_md <span class="ot">&lt;-</span> <span class="fu">get_species_md</span>(arg_maz)</span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>arg_maz_species_md</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 5</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 5</span></span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sp_basal_area_perc sp_leaf_habit  sp_name            sp_ntrees si_code</span></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;  </span></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                100 cold deciduous Nothofagus pumilio         5 ARG_MAZ</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>arg_maz_plant_md <span class="ot">&lt;-</span> <span class="fu">get_plant_md</span>(arg_maz)</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>arg_maz_plant_md</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 26</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 26</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    180 Corrected, measur…          14.7 ARG_MAZ…   41.1 NA               109. </span></span>
@@ -346,7 +346,7 @@ So, let’s read the data in the environment:</p>
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>arg_maz_env_md <span class="ot">&lt;-</span> <span class="fu">get_env_md</span>(arg_maz)</span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>arg_maz_env_md</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 17</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 17</span></span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   env_leafarea_seasonal env_netrad   env_plant_watpot env_ppfd_in  env_precip</span></span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;lgl&gt;                 &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;     </span></span>
 <span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 NA                    Not provided leaf: midday     Not provided Clearing  </span></span>
@@ -382,13 +382,13 @@ So, let’s read the data in the environment:</p>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type:</span></span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Character</span></span></code></pre></div>
-<p>There is also some getters that can come in handy sometimes. <code>get_timestamp</code> and <code>get_solar_timestamp</code> access to the original timestamp and the apparent solar time timestamp. <code>get_si_code</code> access to the site code. See <code>vignette(&#39;sfn-data-classes&#39;, package = &#39;sapfluxnetr&#39;</code> for more info.</p>
+<p>There is also some getters thet can come in handy sometimes. <code>get_timestamp</code> and <code>get_solar_timestamp</code> access to the original timestamp and the apparent solar time timestamp. <code>get_si_code</code> access to the site code. See <code>vignette(&#39;sfn-data-classes&#39;, package = &#39;sapfluxnetr&#39;</code> for more info.</p>
 <div id="flags" class="section level4">
 <h4>Flags</h4>
 <p><code>sfn_data</code> objects also have two more slots, accessed with <code>get_sapf_flags</code> and <code>get_env_flags</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>arg_maz_sapf_flags <span class="ot">&lt;-</span> <span class="fu">get_sapf_flags</span>(arg_maz, <span class="at">solar =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>arg_maz_sapf_flags</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 x 6</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 × 6</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_MAZ_Npu_Jt_1 ARG_MAZ_Npu_Jt_2 ARG_MAZ_Npu_Jt_3</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 22:24:18 &quot;&quot;               &quot;&quot;               &quot;&quot;              </span></span>
@@ -406,7 +406,7 @@ So, let’s read the data in the environment:</p>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>arg_maz_env_flags <span class="ot">&lt;-</span> <span class="fu">get_env_flags</span>(arg_maz, <span class="at">solar =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>arg_maz_env_flags</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 x 10</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 × 10</span></span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ta    rh    vpd   sw_in ws    precip  swc_shallow ppfd_in</span></span>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;  </span></span>
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 22:24:18 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;      &quot;&quot;          CALCUL…</span></span>
@@ -420,10 +420,10 @@ So, let’s read the data in the environment:</p>
 <span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-19 06:24:02 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;      &quot;&quot;          CALCUL…</span></span>
 <span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-19 07:24:02 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;      &quot;&quot;          CALCUL…</span></span>
 <span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 278 more rows, and 1 more variable: ext_rad &lt;chr&gt;</span></span></code></pre></div>
-<p>This datasets store any flag that each data point may have (possible outlier, data removed in the Quality Check of the data…). For a complete list of flags possible values see <code>vignette(&#39;data-flags&#39;, package = &#39;sapfluxnetr&#39;)</code>. As an example, let’s see which values are marked as “RANGE_WARN” (a warning indicating that the value may be out of normal variable range):</p>
+<p>This datasets store any flag thet each data point may have (possible outlier, data removed in the Quality Check of the data…). For a complete list of flags possible values see <code>vignette(&#39;data-flags&#39;, package = &#39;sapfluxnetr&#39;)</code>. As an example, let’s see which values are marked as “RANGE_WARN” (a warning indicating thet the value may be out of normal variable range):</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>arg_maz_env_flags <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_all</span>(<span class="fu">any_vars</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(., <span class="st">&#39;RANGE_WARN&#39;</span>)))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 x 10</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 10</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   TIMESTAMP           ta    rh    vpd   sw_in ws      precip swc_shallow ppfd_in</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;  </span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2009-11-25 13:22:41 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    RANGE_… &quot;&quot;     &quot;&quot;          CALCUL…</span></span>
@@ -436,12 +436,12 @@ So, let’s read the data in the environment:</p>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 2009-11-28 10:21:09 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    RANGE_… &quot;&quot;     &quot;&quot;          CALCUL…</span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9 2009-11-28 12:21:09 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    RANGE_… &quot;&quot;     &quot;&quot;          CALCUL…</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: ext_rad &lt;chr&gt;</span></span></code></pre></div>
-<p>We see that the out of range warnings refer to wind variable. We can cross the data to see which values of wind speed are giving the warnings,</p>
+<p>We see thet the out of range warnings refer to wind variable. We can cross the data to see which values of wind speed are giving the warnings,</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>arg_maz_env_flags <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_all</span>(<span class="fu">any_vars</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(., <span class="st">&#39;RANGE_WARN&#39;</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(arg_maz_env, ., <span class="at">by =</span> <span class="st">&#39;TIMESTAMP&#39;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(TIMESTAMP, ws)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 x 2</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 2</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   TIMESTAMP              ws</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;dbl&gt;</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2009-11-25 13:22:41  45.1</span></span>
@@ -453,12 +453,12 @@ So, let’s read the data in the environment:</p>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 2009-11-26 13:22:32  48.3</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 2009-11-28 10:21:09  46.7</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9 2009-11-28 12:21:09  48.3</span></span></code></pre></div>
-<p>and confirm that the warnings refer to values above the “usual” wind speed maximum.</p>
+<p>and confirm thet the warnings refer to values above the “usual” wind speed maximum.</p>
 </div>
 </div>
 <div id="plotting-an-object" class="section level3">
 <h3>Plotting an object</h3>
-<p>We can also plot the different data with the help of <code>sfn_plot</code> function. It will return <code>ggplot</code> objects that can be modified afterwards:</p>
+<p>We can also plot the different data with the help of <code>sfn_plot</code> function. It will return <code>ggplot</code> objects thet can be modified afterwards:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sfn_plot</span>(arg_maz, <span class="at">type =</span> <span class="st">&#39;sapf&#39;</span>, <span class="at">solar =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Tree) <span class="sc">+</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
@@ -524,32 +524,32 @@ So, let’s read the data in the environment:</p>
 <span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] &quot;vpd_q_95&quot;             &quot;sw_in_q_95&quot;           &quot;ws_q_95&quot;             </span></span>
 <span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [34] &quot;precip_q_95&quot;          &quot;swc_shallow_q_95&quot;     &quot;ppfd_in_q_95&quot;        </span></span>
 <span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] &quot;ext_rad_q_95&quot;         &quot;precip_accumulated&quot;</span></span></code></pre></div>
-<p>We can see that results are divided in <code>sapf</code> and <code>env</code> and inside each of them the metrics are indicated by the end of the variable names.<br />
+<p>We can see thet results are divided in <code>sapf</code> and <code>env</code> and inside each of them the metrics are indicated by the end of the variable names.<br />
 This way we can select specific variables, for example the 0.95 quantile of sap flow measures:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>arg_maz_daily[[<span class="st">&#39;sapf&#39;</span>]] <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(TIMESTAMP, <span class="fu">ends_with</span>(<span class="st">&#39;q_95&#39;</span>))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 x 6</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_MAZ_Npu_Jt_1_q… ARG_MAZ_Npu_Jt_2_… ARG_MAZ_Npu_Jt_3_…</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00               1949.               754.               736.</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-19 00:00:00               4603.              2835.              1692.</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-20 00:00:00               2561.              1289.               801.</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-21 00:00:00               4001.              2459.              1508.</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-22 00:00:00               4396.              2761.              1466.</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-23 00:00:00               5192.              3160.              1842.</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-24 00:00:00               5135.              3160.              1879.</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-25 00:00:00               4724.              3077.              1522.</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-26 00:00:00               5642.              3449.              1845.</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-27 00:00:00               6560.              4174.              2251.</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-28 00:00:00               7142.              4288.              2362.</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-29 00:00:00               5319.              3494.              2000.</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-30 00:00:00               2408.              1804.               711.</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 6</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_MAZ_Npu_Jt_1_q_95 ARG_MAZ_Npu_Jt_2… ARG_MAZ_Npu_Jt_3…</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00                 1949.              754.              736.</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-19 00:00:00                 4603.             2835.             1692.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-20 00:00:00                 2561.             1289.              801.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-21 00:00:00                 4001.             2459.             1508.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-22 00:00:00                 4396.             2761.             1466.</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-23 00:00:00                 5192.             3160.             1842.</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-24 00:00:00                 5135.             3160.             1879.</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-25 00:00:00                 4724.             3077.             1522.</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-26 00:00:00                 5642.             3449.             1845.</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-27 00:00:00                 6560.             4174.             2251.</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-28 00:00:00                 7142.             4288.             2362.</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-29 00:00:00                 5319.             3494.             2000.</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-30 00:00:00                 2408.             1804.              711.</span></span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 more variables: ARG_MAZ_Npu_Jt_4_q_95 &lt;dbl&gt;,</span></span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_MAZ_Npu_Jt_5_q_95 &lt;dbl&gt;</span></span></code></pre></div>
 <p>The same is applicable to the environmental data, in this case the mean values:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>arg_maz_daily[[<span class="st">&#39;env&#39;</span>]] <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(TIMESTAMP, <span class="fu">ends_with</span>(<span class="st">&#39;mean&#39;</span>))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 x 10</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 10</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean precip_mean</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00   4.78     57.8    0.363         0     11.3     0      </span></span>
@@ -567,15 +567,15 @@ This way we can select specific variables, for example the 0.95 quantile of sap 
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-30 00:00:00   0.299    78.0    0.140       241.    18.0     0.00909</span></span>
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 3 more variables: swc_shallow_mean &lt;dbl&gt;, ppfd_in_mean &lt;dbl&gt;,</span></span>
 <span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ext_rad_mean &lt;dbl&gt;</span></span></code></pre></div>
-<p>If interested in custom metrics or custom aggregations, there is a generic function, <code>sfn_metrics</code> that allows for customization of the statistics to calculate and the periods to aggregate. See <code>?sfn_metrics</code> and <code>vignette(&#39;custom-aggregation&#39;. package = &#39;sapfluxnetr&#39;)</code> for more details about it.</p>
+<p>If interested in custom metrics or custom aggregations, there is a generic function, <code>sfn_metrics</code> thet allows for customization of the statistics to calculate and the periods to aggregate. See <code>?sfn_metrics</code> and <code>vignette(&#39;custom-aggregation&#39;. package = &#39;sapfluxnetr&#39;)</code> for more details about it.</p>
 <div id="timestamp-format-in-aggregations" class="section level4">
 <h4>TIMESTAMP format in aggregations</h4>
-<p>It’s worth to mention that aggregated TIMESTAMPS are fixed to the <strong>beginning</strong> of the period aggregated, meaning that data from <code>2018-01-01 00:00:00</code> to <code>2018-01-01 23:59:59</code> are aggregated as <code>2018-01-01 00:00:00</code>.<br />
+<p>It’s worth to mention thet aggregated TIMESTAMPS are fixed to the <strong>beginning</strong> of the period aggregated, meaning thet data from <code>2018-01-01 00:00:00</code> to <code>2018-01-01 23:59:59</code> are aggregated as <code>2018-01-01 00:00:00</code>.<br />
 You can change this using the <code>side</code> parameter (see <code>?sfn_metrics</code>)</p>
 </div>
 <div id="tidy-metrics" class="section level4">
 <h4>Tidy metrics</h4>
-<p>The default returned object for the aggregation functions is a list with the sap flow and the environmental data, but given that usually is more comfortable to have all data (sap flow and environmental) and ancillary data (metadata) altogether in a tidy data frame (each row an observation), all aggregation functions have an argument, <code>tidy</code> that can be set to <em>TRUE</em> to obtain this kind of data frame. We will cover this in the <a href="#tidymetrics">“Tidy metrics”</a> section.</p>
+<p>The default returned object for the aggregation functions is a list with the sap flow and the environmental data, but given thet usually is more comfortable to have all data (sap flow and environmental) and ancillary data (metadata) altogether in a tidy data frame (each row an observation), all aggregation functions have an argument, <code>tidy</code> thet can be set to <em>TRUE</em> to obtain this kind of data frame. We will cover this in the <a href="#tidymetrics">“Tidy metrics”</a> section.</p>
 </div>
 </div>
 </div>
@@ -593,7 +593,7 @@ You can change this using the <code>side</code> parameter (see <code>?sfn_metric
 If we take a look at <code>sfn_metadata</code> we can see a list with 5 data frames, one for each metadata class (site, stand, species, plant and environmental metadata).</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># access plant metadata</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sfn_metadata[[<span class="st">&#39;plant_md&#39;</span>]]</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 x 26</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 26</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pl_age pl_azimut_int     pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  180   Corrected, measu…          14.7 ARG_MAZ…   41.1      NA          109. </span></span>
@@ -616,12 +616,12 @@ If we take a look at <code>sfn_metadata</code> we can see a list with 5 data fra
 </div>
 <div id="listing-the-sites-in-a-folder-and-filtering-by-metadata" class="section level3">
 <h3>Listing the sites in a folder and filtering by metadata</h3>
-<p>Now that we have our metadata database built, we can inspect the site codes in a folder with <code>sfn_sites_in_folder</code>:</p>
+<p>Now thet we have our metadata database built, we can inspect the site codes in a folder with <code>sfn_sites_in_folder</code>:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>folder <span class="ot">&lt;-</span> <span class="st">&#39;RData/plant/&#39;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">sfn_sites_in_folder</span>(folder)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>sites</span></code></pre></div>
 <pre><code>#&gt; [1] &quot;ARG_MAZ&quot;         &quot;ARG_TRE&quot;         &quot;AUS_CAN_ST2_MIX&quot;</code></pre>
-<p>We can filter these sites by any metadata variable, to select those that met some criteria. This is done with <code>filter_sites_by_md</code>. As a first try, let’s list all sites belonging to temperate forests (woodland/shrubland included):</p>
+<p>We can filter these sites by any metadata variable, to select those thet met some criteria. This is done with <code>filter_sites_by_md</code>. As a first try, let’s list all sites belonging to temperate forests (woodland/shrubland included):</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>temperate <span class="ot">&lt;-</span> <span class="fu">sfn_sites_in_folder</span>(folder) <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_sites_by_md</span>(</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    si_biome <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Woodland/Shrubland&#39;</span>, <span class="st">&#39;Temperate forest&#39;</span>),</span>
@@ -640,7 +640,7 @@ If we take a look at <code>sfn_metadata</code> we can see a list with 5 data fra
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>temperate_hr</span></code></pre></div>
 <pre><code>#&gt; [1] &quot;ARG_MAZ&quot; &quot;ARG_TRE&quot;</code></pre>
-<p>Remember that you can get all the info from a metadata variable with <code>describe_md_variable</code>, and also you can get a complete list of metadata variables for filtering with <code>sfn_vars_to_filter</code>:</p>
+<p>Remember thet you can get all the info from a metadata variable with <code>describe_md_variable</code>, and also you can get a complete list of metadata variables for filtering with <code>sfn_vars_to_filter</code>:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sfn_vars_to_filter</span>()</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $site_md</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;si_name&quot;                 &quot;si_country&quot;             </span></span>
@@ -780,7 +780,7 @@ If we take a look at <code>sfn_metadata</code> we can see a list with 5 data fra
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>temperate_tidy</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12,769 x 129</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12,769 × 129</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           si_code  pl_code sapflow_mean sapflow_sd sapflow_coverage</span></span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2006-06-20 00:00:00 AUS_CAN… AUS_CA…          NaN         NA                0</span></span>
@@ -799,32 +799,7 @@ If we take a look at <code>sfn_metadata</code> we can see a list with 5 data fra
 <span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ppfd_in_mean &lt;dbl&gt;, ext_rad_mean &lt;dbl&gt;, ta_sd &lt;dbl&gt;, rh_sd &lt;dbl&gt;,</span></span>
 <span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   vpd_sd &lt;dbl&gt;, sw_in_sd &lt;dbl&gt;, ws_sd &lt;dbl&gt;, precip_sd &lt;dbl&gt;,</span></span>
 <span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   swc_shallow_sd &lt;dbl&gt;, ppfd_in_sd &lt;dbl&gt;, ext_rad_sd &lt;dbl&gt;,</span></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ta_coverage &lt;dbl&gt;, rh_coverage &lt;dbl&gt;, vpd_coverage &lt;dbl&gt;,</span></span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   sw_in_coverage &lt;dbl&gt;, ws_coverage &lt;dbl&gt;, precip_coverage &lt;dbl&gt;,</span></span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   swc_shallow_coverage &lt;dbl&gt;, ppfd_in_coverage &lt;dbl&gt;, ext_rad_coverage &lt;dbl&gt;,</span></span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ta_q_95 &lt;dbl&gt;, rh_q_95 &lt;dbl&gt;, vpd_q_95 &lt;dbl&gt;, sw_in_q_95 &lt;dbl&gt;,</span></span>
-<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ws_q_95 &lt;dbl&gt;, precip_q_95 &lt;dbl&gt;, swc_shallow_q_95 &lt;dbl&gt;,</span></span>
-<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ppfd_in_q_95 &lt;dbl&gt;, ext_rad_q_95 &lt;dbl&gt;, precip_accumulated &lt;dbl&gt;,</span></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_age &lt;dbl&gt;, pl_azimut_int &lt;chr&gt;, pl_bark_thick &lt;dbl&gt;, pl_dbh &lt;dbl&gt;,</span></span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_height &lt;dbl&gt;, pl_leaf_area &lt;dbl&gt;, pl_name &lt;chr&gt;, pl_radial_int &lt;chr&gt;,</span></span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_remarks &lt;chr&gt;, pl_sap_units &lt;chr&gt;, pl_sapw_area &lt;dbl&gt;,</span></span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;, pl_sens_cor_grad &lt;chr&gt;,</span></span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;, pl_sens_length &lt;int&gt;,</span></span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;, pl_sens_timestep &lt;int&gt;,</span></span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;chr&gt;,</span></span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;, si_addcontr_email &lt;chr&gt;,</span></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_addcontr_firstname &lt;chr&gt;, si_addcontr_institution &lt;chr&gt;,</span></span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_addcontr_lastname &lt;chr&gt;, si_contact_email &lt;chr&gt;,</span></span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_contact_firstname &lt;chr&gt;, si_contact_institution &lt;chr&gt;,</span></span>
-<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_contact_lastname &lt;chr&gt;, si_country &lt;chr&gt;, si_dendro_network &lt;lgl&gt;,</span></span>
-<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_dist_mgmt &lt;chr&gt;, si_elev &lt;int&gt;, si_flux_network &lt;lgl&gt;, si_igbp &lt;chr&gt;,</span></span>
-<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_lat &lt;dbl&gt;, si_long &lt;dbl&gt;, si_name &lt;chr&gt;, si_paper &lt;chr&gt;,</span></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_remarks &lt;chr&gt;, is_inside_country &lt;lgl&gt;, si_mat &lt;dbl&gt;, si_map &lt;dbl&gt;,</span></span>
-<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_biome &lt;chr&gt;, st_age &lt;dbl&gt;, st_aspect &lt;chr&gt;, st_basal_area &lt;dbl&gt;,</span></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_clay_perc &lt;lgl&gt;, st_density &lt;int&gt;, st_growth_condition &lt;chr&gt;,</span></span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_height &lt;dbl&gt;, st_lai &lt;dbl&gt;, st_name &lt;chr&gt;, st_remarks &lt;lgl&gt;,</span></span>
-<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_sand_perc &lt;lgl&gt;, st_silt_perc &lt;lgl&gt;, st_soil_depth &lt;int&gt;,</span></span>
-<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_soil_texture &lt;chr&gt;, …</span></span></code></pre></div>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ta_coverage &lt;dbl&gt;, rh_coverage &lt;dbl&gt;, vpd_coverage &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>Now we can start analyzing, modeling, etc.<br />
 For example, to look for site effects in the relationship between sap flow and vpd, using the 0.95 quantile as maximum values of sap flow and the plant sapwood area as a third variable:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>

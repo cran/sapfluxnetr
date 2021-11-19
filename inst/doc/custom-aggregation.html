@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>Custom aggregation</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Custom aggregation</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
@@ -193,23 +193,23 @@ The correct way of specifying the functions to use is described in the <code>sum
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>foo_simpler_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                308.               173.               303.</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                507.               376.               432.</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00                541.               380.               391.</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                330.               218.               272.</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                338.               219.               278.</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                384.               243.               310.</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00                492.               300.               390.</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                573.               389.               497.</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                601.               400.               484.</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                502.               360.               450.</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                544.               411.               506.</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                573.               451.               589.</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                371.               285.               357.</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                386.               293.               381.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 9</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_mean ARG_TRE_Nan_Jt_2… ARG_TRE_Nan_Jt_3…</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                  308.              173.              303.</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                  507.              376.              432.</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00                  541.              380.              391.</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                  330.              218.              272.</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                  338.              219.              278.</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                  384.              243.              310.</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00                  492.              300.              390.</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                  573.              389.              497.</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                  601.              400.              484.</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                  502.              360.              450.</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                  544.              411.              506.</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                  573.              451.              589.</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                  371.              285.              357.</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                  386.              293.              381.</span></span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
@@ -231,7 +231,7 @@ The correct way of specifying the functions to use is described in the <code>sum
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;midday data for ARG_TRE&quot;</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>foo_simpler_metrics_midday[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 x 9</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 9</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP_md        ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00                685.               665.               614.</span></span>
@@ -269,7 +269,7 @@ The correct way of specifying the functions to use is described in the <code>sum
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>foo_weekly[[<span class="st">&#39;env&#39;</span>]]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 19</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 19</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   TIMESTAMP           ta_mean rh_mean vpd_mean sw_in_mean ws_mean precip_mean</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2009-11-15 00:00:00    4.81    35.3    0.598       280.    15.5     0.00612</span></span>
@@ -280,7 +280,7 @@ The correct way of specifying the functions to use is described in the <code>sum
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   sw_in_std_dev &lt;dbl&gt;, ws_std_dev &lt;dbl&gt;, precip_std_dev &lt;dbl&gt;,</span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   swc_shallow_std_dev &lt;dbl&gt;, ppfd_in_std_dev &lt;dbl&gt;, ext_rad_std_dev &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
-<li>A custom function name (without quotes). This way you can build irregular or custom periods. This function first argument must always be the timestamp to be collapsed, and can have other arguments that will be supplied in the dots (<code>...</code>) argument of <code>sfn_metrics</code>. Also, this function always must return a vector of timestamps of the same length as the original timestamp.<br />
+<li>A custom function name (without quotes). This way you can build irregular or custom periods. This function first argument must always be the timestamp to be collapsed, and can have other arguments thet will be supplied in the dots (<code>...</code>) argument of <code>sfn_metrics</code>. Also, this function always must return a vector of timestamps of the same length as the original timestamp.<br />
 For example, if you want to summarise by quarters we can use the <code>quarter</code> function from the lubridate package:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>foo_custom <span class="ot">&lt;-</span> <span class="fu">sfn_metrics</span>(</span>
@@ -300,7 +300,7 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>foo_custom[<span class="st">&#39;env&#39;</span>]</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $env</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 17</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 17</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   TIMESTAMP ta_mean vpd_mean sw_in_mean ws_mean precip_mean ppfd_in_mean rh_mean</span></span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;</span></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     2006.    8.48    0.106       25.4   0.161      0.0158         53.7    93.1</span></span>
@@ -324,7 +324,7 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 </ul></li>
 <li><p><code>dplyr::summarise_all</code> accepts extra arguments intended to be applied to the summarising functions provided (to <strong>all</strong>, so they all must have the argument provided or an error will be raised). That’s the reason because we recommend to use the list way, as the arguments are specified for the individual functions.</p></li>
 </ol>
-<p>For example, if we want the TIMESTAMPs after aggregation to show the end of the period instead the begining (default) we can do the following:</p>
+<p>For example, if we want the TIMESTAMPs after aggregation to show the end of the period instead the beginning (default) we can do the following:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>foo_simpler_metrics_end <span class="ot">&lt;-</span> <span class="fu">sfn_metrics</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  ARG_TRE,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">period =</span> <span class="st">&#39;1 day&#39;</span>,</span>
@@ -337,23 +337,23 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>foo_simpler_metrics_end[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00                308.               173.               303.</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-19 00:00:00                507.               376.               432.</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-20 00:00:00                541.               380.               391.</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-21 00:00:00                330.               218.               272.</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-22 00:00:00                338.               219.               278.</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-23 00:00:00                384.               243.               310.</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-24 00:00:00                492.               300.               390.</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-25 00:00:00                573.               389.               497.</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-26 00:00:00                601.               400.               484.</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-27 00:00:00                502.               360.               450.</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-28 00:00:00                544.               411.               506.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-29 00:00:00                573.               451.               589.</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-30 00:00:00                371.               285.               357.</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-12-01 00:00:00                386.               293.               381.</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 9</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_mean ARG_TRE_Nan_Jt_2… ARG_TRE_Nan_Jt_3…</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00                  308.              173.              303.</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-19 00:00:00                  507.              376.              432.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-20 00:00:00                  541.              380.              391.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-21 00:00:00                  330.              218.              272.</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-22 00:00:00                  338.              219.              278.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-23 00:00:00                  384.              243.              310.</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-24 00:00:00                  492.              300.              390.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-25 00:00:00                  573.              389.              497.</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-26 00:00:00                  601.              400.              484.</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-27 00:00:00                  502.              360.              450.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-28 00:00:00                  544.              411.              506.</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-29 00:00:00                  573.              451.              589.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-30 00:00:00                  371.              285.              357.</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-12-01 00:00:00                  386.              293.              381.</span></span>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_std_dev &lt;dbl&gt;,</span></span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_std_dev &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_std_dev &lt;dbl&gt;</span></span></code></pre></div>
@@ -367,8 +367,8 @@ For example, if you want to summarise by quarters we can use the <code>quarter</
 <p>The internal aggregation process in <code>sfn_metrics</code> generates some transitory columns which can be used in the summarising functions:</p>
 <div id="timestamp_coll" class="section level3">
 <h3><code>TIMESTAMP_coll</code></h3>
-<p>When aggregating by the declared period (i.e. <code>&quot;daily&quot;</code>), the TIMESTAMP column collapses to the period start/end value (meaning that all the TIMESTAMP values for the same day becomes identical).<br />
-This makes impossible to use any summarise functions that obtain the time of the day at which one event happens (i.e. time of the day at which the maximum sap flow occurs) because all TIMESTAMP values are identical. For that kind of summarising functions, a transitory column called <code>TIMESTAMP_coll</code> is created. So in this case we can create a function that takes de variable values for the day, the TIMESTAMP_coll values for the day and return the TIMESTAMP at which the max sap flow occurs and use it with <code>sfn_metrics</code>:</p>
+<p>When aggregating by the declared period (i.e. <code>&quot;daily&quot;</code>), the TIMESTAMP column collapses to the period start/end value (meaning thet all the TIMESTAMP values for the same day becomes identical).<br />
+This makes impossible to use any summarise functions thet obtain the time of the day at which one event happens (i.e. time of the day at which the maximum sap flow occurs) because all TIMESTAMP values are identical. For thet kind of summarising functions, a transitory column called <code>TIMESTAMP_coll</code> is created. So in this case we can create a function thet takes de variable values for the day, the TIMESTAMP_coll values for the day and return the TIMESTAMP at which the max sap flow occurs and use it with <code>sfn_metrics</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>max_time <span class="ot">&lt;-</span> <span class="cf">function</span>(x, time) {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x: vector of values for a day</span></span>
@@ -397,23 +397,23 @@ This makes impossible to use any summarise functions that obtain the time of the
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>max_time_metrics[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 x 9</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                322.               190.               313.</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                778.               715.               679.</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00               1015.               694.               633.</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                648.               401.               442.</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                664.               406.               539.</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                812.               564.               816.</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00               1085.               676.               935.</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                992.               736.              1115.</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                976.               646.               951.</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                932.               766.              1087.</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                862.               704.               921.</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                845.               763.              1165.</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                714.               747.               701.</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                875.               646.               919.</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 9</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_max ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3…</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                             &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                 322.               190.              313.</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                 778.               715.              679.</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00                1015.               694.              633.</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                 648.               401.              442.</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                 664.               406.              539.</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                 812.               564.              816.</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00                1085.               676.              935.</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                 992.               736.             1115.</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                 976.               646.              951.</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                 932.               766.             1087.</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                 862.               704.              921.</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                 845.               763.             1165.</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                 714.               747.              701.</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                 875.               646.              919.</span></span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 5 more variables: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;,</span></span>
 <span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_2_max_time &lt;dttm&gt;,</span></span>
 <span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_max_time &lt;dttm&gt;, ARG_TRE_Nan_Jt_4_max_time &lt;dttm&gt;</span></span></code></pre></div>
@@ -421,7 +421,7 @@ This makes impossible to use any summarise functions that obtain the time of the
 </div>
 <div id="sub-daily-aggregations" class="section level2">
 <h2>Sub-daily aggregations</h2>
-<p><code>sfn_metrics</code> allows to perform sub-daily aggregations, by means of the <code>period</code> parameter. Ssapfluxnet datasets have sub-daily data usually in the range of 30 minutes to 2 hours. This means that data can be aggregated in periods above 2 hours. We can aggregate to a 3 hours period easily:</p>
+<p><code>sfn_metrics</code> allows to perform sub-daily aggregations, by means of the <code>period</code> parameter. Sapfluxnet datasets have sub-daily data usually in the range of 30 minutes to 2 hours. This means thet data can be aggregated in periods above 2 hours. We can aggregate to a 3 hours period easily:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>custom_funs <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">max =</span> <span class="sc">~</span> <span class="fu">max</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>three_hours_agg <span class="ot">&lt;-</span> <span class="fu">sfn_metrics</span>(</span>
@@ -435,19 +435,19 @@ This makes impossible to use any summarise functions that obtain the time of the
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for ARG_TRE&quot;</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>three_hours_agg[[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 105 x 5</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 21:00:00                322.               190.               313.</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                301.               178.               331.</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-18 03:00:00                343.               198.               301.</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-18 06:00:00                504.               386.               406.</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-18 09:00:00                698.               715.               642.</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-18 12:00:00                778.               617.               679.</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-18 15:00:00                724.               531.               603.</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-18 18:00:00                660.               514.               517.</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-18 21:00:00                384.               261.               348.</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-19 00:00:00                403.               339.               313.</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 105 × 5</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_max ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3…</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                             &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 21:00:00                 322.               190.              313.</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                 301.               178.              331.</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-18 03:00:00                 343.               198.              301.</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-18 06:00:00                 504.               386.              406.</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-18 09:00:00                 698.               715.              642.</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-18 12:00:00                 778.               617.              679.</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-18 15:00:00                 724.               531.              603.</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-18 18:00:00                 660.               514.              517.</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-18 21:00:00                 384.               261.              348.</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-19 00:00:00                 403.               339.              313.</span></span>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 95 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4_max &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 

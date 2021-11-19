@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>sfn_data classes</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">sfn_data classes</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
@@ -153,10 +153,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>sfn_data</code> class has twelve different slots:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>sapf_data</strong>: Tibble containing the sap flow data, each column representing an individual tree, <strong>without</strong> any TIMESTAMP variable.</p></li>
-<li><p><strong>env_data</strong>: Tibble containing the environmental data, each column an environmental variable, <strong>without</strong> any TIMESTAMP variable. It must have the same <code>nrow</code> that <code>sapf_data</code>, in order to be able to combine both in further analyses or aggregations.</p></li>
+<li><p><strong>env_data</strong>: Tibble containing the environmental data, each column an environmental variable, <strong>without</strong> any TIMESTAMP variable. It must have the same <code>nrow</code> thet <code>sapf_data</code>, in order to be able to combine both in further analyses or aggregations.</p></li>
 <li><p><strong>sapf_flags</strong>: Tibble with the same dimensions as <code>sapf_data</code>, containing the flags (special remarks indicating possible outliers or any annotation of interest) for each observation in <code>sapf_data</code>.</p></li>
 <li><p><strong>env_flags</strong>: Tibble with the same dimensions as <code>env_data</code>, containing the flags for each observation in <code>env_data</code>.</p></li>
-<li><p><strong>si_code</strong>: Character vector of length 1 with the site code. Useful for further analyses or aggregations in order to identify the site when working with more than one.</p></li>
+<li><p><strong>si_code</strong>: Character vector of length 1 with the site code. Useful for further analyses or aggregations in order to identify the site when working with more then one.</p></li>
 <li><p><strong>timestamp</strong>: POSIXct vector of length equal to <code>nrow(sapf_data)</code> with the timestamp values.</p></li>
 <li><p><strong>solar_timestamp</strong>: POSIXct vector of length equal to <code>nrow(sapf_data)</code> with the apparent solar timestamp.</p></li>
 <li><p><strong>site_md</strong>: Tibble with the site metadata. See <code>sfn_vars_to_filter()</code> for a list of possible metadata variables. This variables are not mandatory, and new ones can be added.</p></li>
@@ -178,9 +178,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>nrow(sapf_data) == nrow(env_data) == nrow(sapf_flags) == nrow(env_flags) == length(timestamp) == length(solar_timestamp)</code></p>
 <p><code>ncol(sapf_data) == ncol(sapf_flags)</code></p>
 <p><code>ncol(env_data) == ncol(env_flags)</code></p>
-<p>In the case of differences in the dimensions between environmental and sap flow data, NAs must be added in the corresponding places when equalising both TIMESTAMPs (i.e. if env data is longer than sapf data, rows are added to the later with NAs to make them equal, and flags (“NA_ADDED”) are raised to indicate the adding).</p></li>
+<p>In the case of differences in the dimensions between environmental and sap flow data, NAs must be added in the corresponding places when equalising both TIMESTAMPs (i.e. if env data is longer then sapf data, rows are added to the later with NAs to make them equal, and flags (“NA_ADDED”) are raised to indicate the adding).</p></li>
 <li><p><strong>si_code slot</strong>: This slot indicates the site. This is useful for identifying the site in the metrics functions results.</p></li>
-<li><p><strong>Compartimentalization</strong>: <code>timestamp</code> and <code>solar_timestamp</code> are isolated from data (sapf and env) in their own slot. This made easier subsetting the object and open the possibility of working with the timestamps only.</p></li>
+<li><p><strong>Compartmentalization</strong>: <code>timestamp</code> and <code>solar_timestamp</code> are isolated from data (sapf and env) in their own slot. This made easier subsetting the object and open the possibility of working with the timestamps only.</p></li>
 <li><p><strong>Flags</strong>: Two slots are used for storing data flags. As the flag slots have the same dimensions as the corresponding dataset slot, selection of flagged data is straightforward:</p>
 <p><code>sapf_data[flag_data == &quot;flag&quot;, ]</code></p></li>
 </ul>
@@ -226,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>get methods</code>: methods to get any slot outside the object. In the case of sapf and env data, TIMESTAMP is added (based on the <code>solar</code> argument) in order to obtain fully functional datasets. See <code>?sfn_get_methods</code> for more details.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(ARG_TRE, <span class="at">solar =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             322.             190.             313.</span></span>
@@ -241,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-18 09:00:00             433.             340.             352.</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4 &lt;dbl&gt;</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(ARG_TRE, <span class="at">solar =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 22:24:58             322.             190.             313.</span></span>
@@ -256,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-18 07:24:43             433.             340.             352.</span></span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4 &lt;dbl&gt;</span></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">get_env_data</span>(ARG_TRE) <span class="co"># solar default is FALSE</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 10</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 10</span></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP              ta    rh   vpd sw_in    ws precip swc_shallow ppfd_in</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00  1     41.7 0.383   0   13.6       0       0.396      0 </span></span>
@@ -271,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-18 09:00:00  6.75  33.0 0.660 245    4.48      0       0.391    518.</span></span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ext_rad &lt;dbl&gt;</span></span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_flags</span>(ARG_TRE) <span class="co"># solar default is FALSE</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00 &quot;&quot;               &quot;&quot;               &quot;&quot;              </span></span>
@@ -286,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-18 09:00:00 &quot;&quot;               &quot;&quot;               &quot;&quot;              </span></span>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4 &lt;chr&gt;</span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="fu">get_env_flags</span>(ARG_TRE) <span class="co"># solar default is FALSE</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 10</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 10</span></span>
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ta    rh    vpd   sw_in ws    precip swc_shallow ppfd_in </span></span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;   </span></span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00 &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;     &quot;&quot;          CALCULA…</span></span>
@@ -315,10 +315,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;2009-11-18 04:24:43 UTC&quot; &quot;2009-11-18 05:24:43 UTC&quot;</span></span>
 <span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;2009-11-18 06:24:43 UTC&quot; &quot;2009-11-18 07:24:43 UTC&quot;</span></span>
 <span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="fu">get_site_md</span>(ARG_TRE)</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 24</span></span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si_addcontr_email si_addcontr_fir… si_addcontr_insti… si_addcontr_las… si_code</span></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;  </span></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 &lt;NA&gt;              Pablo            Instituto Naciona… Peri             ARG_TRE</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 24</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si_addcontr_email si_addcontr_firs… si_addcontr_inst… si_addcontr_las… si_code</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;  </span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 &lt;NA&gt;              Pablo             Instituto Nacion… Peri             ARG_TRE</span></span>
 <span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: si_contact_email &lt;chr&gt;, si_contact_firstname &lt;chr&gt;,</span></span>
 <span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_contact_institution &lt;chr&gt;, si_contact_lastname &lt;chr&gt;, si_country &lt;chr&gt;,</span></span>
 <span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_dendro_network &lt;lgl&gt;, si_dist_mgmt &lt;chr&gt;, si_elev &lt;int&gt;,</span></span>
@@ -326,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_name &lt;chr&gt;, si_paper &lt;chr&gt;, si_remarks &lt;lgl&gt;, is_inside_country &lt;lgl&gt;,</span></span>
 <span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   si_mat &lt;dbl&gt;, si_map &lt;dbl&gt;, si_biome &lt;chr&gt;</span></span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="fu">get_stand_md</span>(ARG_TRE)</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 18</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 18</span></span>
 <span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   st_age st_aspect st_basal_area st_clay_perc st_density st_growth_condition    </span></span>
 <span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;             &lt;int&gt; &lt;chr&gt;                  </span></span>
 <span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    140 Flat               19.4 NA                  512 Naturally regenerated,…</span></span>
@@ -335,12 +335,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_soil_depth &lt;int&gt;, st_soil_texture &lt;chr&gt;, st_terrain &lt;chr&gt;,</span></span>
 <span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   st_treatment &lt;lgl&gt;, si_code &lt;chr&gt;, st_USDA_soil_texture &lt;chr&gt;</span></span>
 <span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="fu">get_species_md</span>(ARG_TRE)</span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 5</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 5</span></span>
 <span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sp_basal_area_perc sp_leaf_habit  sp_name               sp_ntrees si_code</span></span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;  </span></span>
 <span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                100 cold deciduous Nothofagus antarctica         4 ARG_TRE</span></span>
 <span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plant_md</span>(ARG_TRE)</span>
-<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 x 26</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 26</span></span>
 <span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
 <span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    140 Corrected, measur…          23.5 ARG_TRE…   23.6 NA                29.7</span></span>
@@ -355,7 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;lgl&gt;, si_code &lt;chr&gt;,</span></span>
 <span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
 <span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="fu">get_env_md</span>(ARG_TRE)</span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 17</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 17</span></span>
 <span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   env_leafarea_seasonal env_netrad   env_plant_watpot env_ppfd_in  env_precip</span></span>
 <span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;lgl&gt;                 &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;     </span></span>
 <span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 NA                    Not provided leaf: midday     Not provided Clearing  </span></span>
@@ -381,7 +381,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get sap flow data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>foo_bad_sapf <span class="ot">&lt;-</span> <span class="fu">get_sapf_data</span>(ARG_TRE)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pull a row, now it has diferent dimensions than</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pull a row, now it has diferent dimensions then</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>foo_bad_sapf <span class="ot">&lt;-</span> foo_bad_sapf[<span class="sc">-</span><span class="dv">1</span>,]</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># try to assign the incorrect data fails</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(ARG_TRE) <span class="ot">&lt;-</span> foo_bad_sapf[,<span class="sc">-</span><span class="dv">1</span>] <span class="co"># ERROR</span></span></code></pre></div>
@@ -414,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="utilities" class="section level2">
 <h2>Utilities</h2>
-<p><code>sapfluxnetr</code> package offers some utilities to visulaize and work with sfn_data objects:</p>
+<p><code>sapfluxnetr</code> package offers some utilities to visualize and work with sfn_data objects:</p>
 <div id="sfn_plot" class="section level3">
 <h3><code>sfn_plot</code></h3>
 <p>This function allows to plot <code>sfn_data</code> objects. See <code>?sfn_plot</code> for more details.</p>
@@ -431,7 +431,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="sfn_filter" class="section level3">
 <h3><code>sfn_filter</code></h3>
-<p>This function emulates <code>filter</code> function from <code>dplyr</code> package for <code>sfn_data</code> objects. Useful to filter by some especific timestamp. Be advised, using this funcion to filter by sap flow or environmental variables can create TIMESTAMP gaps. See <code>sfn_filter</code> for more details.</p>
+<p>This function emulates <code>filter</code> function from <code>dplyr</code> package for <code>sfn_data</code> objects. Useful to filter by some specific timestamp. Be advised, using this function to filter by sap flow or environmental variables can create TIMESTAMP gaps. See <code>sfn_filter</code> for more details.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -490,7 +490,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># see the difference between ARG_TRE and foo_mutated_2</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(ARG_TRE)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             322.             190.             313.</span></span>
@@ -505,7 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-18 09:00:00             433.             340.             352.</span></span>
 <span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4 &lt;dbl&gt;</span></span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(foo_mutated_2)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             322.             190.             313.</span></span>
@@ -557,7 +557,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get sap flow data</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sapf_data</span>(multi_sfn)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_TRE</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 x 5</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 312 × 5</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1 ARG_TRE_Nan_Jt_2 ARG_TRE_Nan_Jt_3</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-18 00:00:00             322.             190.             313.</span></span>
@@ -573,7 +573,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 302 more rows, and 1 more variable: ARG_TRE_Nan_Jt_4 &lt;dbl&gt;</span></span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_MAZ</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 x 6</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 288 × 6</span></span>
 <span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_MAZ_Npu_Jt_1 ARG_MAZ_Npu_Jt_2 ARG_MAZ_Npu_Jt_3</span></span>
 <span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-19 00:00:00            1955.             754.             742.</span></span>
@@ -590,7 +590,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_MAZ_Npu_Jt_5 &lt;dbl&gt;</span></span>
 <span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $AUS_CAN_ST2_MIX</span></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 17,808 x 35</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 17,808 × 35</span></span>
 <span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           AUS_CAN_ST2_MIX_Am… AUS_CAN_ST2_MIX_E… AUS_CAN_ST2_MIX_A…</span></span>
 <span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
 <span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2006-06-20 11:00:00                  NA                 NA                 NA</span></span>
@@ -609,99 +609,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_8 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Egl_Js_9 &lt;dbl&gt;,</span></span>
 <span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Ame_Js_10 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_11 &lt;dbl&gt;,</span></span>
 <span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_12 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_13 &lt;dbl&gt;,</span></span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_14 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Egl_Js_15 &lt;dbl&gt;,</span></span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Ame_Js_16 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Egl_Js_17 &lt;dbl&gt;,</span></span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Ame_Js_18 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_19 &lt;dbl&gt;,</span></span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_20 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_21 &lt;dbl&gt;,</span></span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_22 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_23 &lt;dbl&gt;,</span></span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_24 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_25 &lt;dbl&gt;,</span></span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_26 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_27 &lt;dbl&gt;,</span></span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_28 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_29 &lt;dbl&gt;,</span></span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_30 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_31 &lt;dbl&gt;,</span></span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_32 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Ame_Js_33 &lt;dbl&gt;,</span></span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_34 &lt;dbl&gt;</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="co"># get plant metadata</span></span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plant_md</span>(multi_sfn)</span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_TRE</span></span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 x 26</span></span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
-<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    140 Corrected, measur…          23.5 ARG_TRE…   23.6 NA                29.7</span></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    140 No azimuthal corr…          22.5 ARG_TRE…   20.2 NA                13.0</span></span>
-<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    140 No azimuthal corr…          22   ARG_TRE…   23.8 NA                29.8</span></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    140 No azimuthal corr…          23.5 ARG_TRE…   19.5 NA                15.1</span></span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: pl_name &lt;chr&gt;, pl_radial_int &lt;chr&gt;,</span></span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_remarks &lt;lgl&gt;, pl_sap_units &lt;chr&gt;, pl_sapw_area &lt;dbl&gt;,</span></span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;, pl_sens_cor_grad &lt;chr&gt;,</span></span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;, pl_sens_length &lt;int&gt;,</span></span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;, pl_sens_timestep &lt;int&gt;,</span></span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;lgl&gt;, si_code &lt;chr&gt;,</span></span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_MAZ</span></span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 26</span></span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    180 Corrected, measur…          14.7 ARG_MAZ…   41.1 NA               109. </span></span>
-<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    180 No azimuthal corr…          13   ARG_MAZ…   33.2 NA                58.4</span></span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    180 No azimuthal corr…           6   ARG_MAZ…   23.2 NA                35.0</span></span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    180 No azimuthal corr…          21   ARG_MAZ…   55.6 NA               174. </span></span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    180 No azimuthal corr…          10   ARG_MAZ…   38   NA                88  </span></span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: pl_name &lt;chr&gt;, pl_radial_int &lt;chr&gt;,</span></span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_remarks &lt;lgl&gt;, pl_sap_units &lt;chr&gt;, pl_sapw_area &lt;dbl&gt;,</span></span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;, pl_sens_cor_grad &lt;chr&gt;,</span></span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;, pl_sens_length &lt;int&gt;,</span></span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;, pl_sens_timestep &lt;int&gt;,</span></span>
-<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;lgl&gt;, si_code &lt;chr&gt;,</span></span>
-<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
-<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $AUS_CAN_ST2_MIX</span></span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 34 x 26</span></span>
-<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pl_age pl_azimut_int   pl_bark_thick pl_code    pl_dbh pl_height pl_leaf_area</span></span>
-<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;lgl&gt;         &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       </span></span>
-<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1   14.5 No azimuthal c… NA            AUS_CAN_S…   13.1      14.3 NA          </span></span>
-<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2   14.5 No azimuthal c… NA            AUS_CAN_S…   10.4      12.9 NA          </span></span>
-<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3   14.5 No azimuthal c… NA            AUS_CAN_S…   12.8      14.1 NA          </span></span>
-<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4   14.5 No azimuthal c… NA            AUS_CAN_S…   17.1      19.4 NA          </span></span>
-<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5   14.5 No azimuthal c… NA            AUS_CAN_S…   11.6      13.6 NA          </span></span>
-<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6   14.5 No azimuthal c… NA            AUS_CAN_S…   19.2      20.5 NA          </span></span>
-<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7   14.5 No azimuthal c… NA            AUS_CAN_S…   12.8      16.6 NA          </span></span>
-<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8   14.5 No azimuthal c… NA            AUS_CAN_S…   12.5      14.1 NA          </span></span>
-<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9   14.5 No azimuthal c… NA            AUS_CAN_S…   13.6      17.2 NA          </span></span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   14.5 No azimuthal c… NA            AUS_CAN_S…   13.8      14.7 NA          </span></span>
-<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 24 more rows, and 19 more variables: pl_name &lt;chr&gt;,</span></span>
-<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_radial_int &lt;chr&gt;, pl_remarks &lt;chr&gt;, pl_sap_units &lt;chr&gt;,</span></span>
-<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_area &lt;dbl&gt;, pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;,</span></span>
-<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_grad &lt;lgl&gt;, pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;,</span></span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_length &lt;lgl&gt;, pl_sens_man &lt;lgl&gt;, pl_sens_meth &lt;chr&gt;,</span></span>
-<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_timestep &lt;int&gt;, pl_social &lt;lgl&gt;, pl_species &lt;chr&gt;,</span></span>
-<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_treatment &lt;chr&gt;, si_code &lt;chr&gt;, pl_sap_units_orig &lt;chr&gt;</span></span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a><span class="co"># with metadata, we can collapse</span></span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plant_md</span>(multi_sfn, <span class="at">collapse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 x 26</span></span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pl_age pl_azimut_int     pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  140   Corrected, measu…          23.5 ARG_TRE…   23.6      NA           29.7</span></span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  140   No azimuthal cor…          22.5 ARG_TRE…   20.2      NA           13.0</span></span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  140   No azimuthal cor…          22   ARG_TRE…   23.8      NA           29.8</span></span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  140   No azimuthal cor…          23.5 ARG_TRE…   19.5      NA           15.1</span></span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  180   Corrected, measu…          14.7 ARG_MAZ…   41.1      NA          109. </span></span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  180   No azimuthal cor…          13   ARG_MAZ…   33.2      NA           58.4</span></span>
-<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  180   No azimuthal cor…           6   ARG_MAZ…   23.2      NA           35.0</span></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  180   No azimuthal cor…          21   ARG_MAZ…   55.6      NA          174. </span></span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  180   No azimuthal cor…          10   ARG_MAZ…   38        NA           88  </span></span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   14.5 No azimuthal cor…          NA   AUS_CAN…   13.1      14.3         NA  </span></span>
-<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 33 more rows, and 19 more variables: pl_name &lt;chr&gt;,</span></span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_radial_int &lt;chr&gt;, pl_remarks &lt;chr&gt;, pl_sap_units &lt;chr&gt;,</span></span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_area &lt;dbl&gt;, pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;,</span></span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_grad &lt;chr&gt;, pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;,</span></span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_length &lt;int&gt;, pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;,</span></span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_timestep &lt;int&gt;, pl_social &lt;chr&gt;, pl_species &lt;chr&gt;,</span></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_treatment &lt;chr&gt;, si_code &lt;chr&gt;, pl_sap_units_orig &lt;chr&gt;</span></span></code></pre></div>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   AUS_CAN_ST2_MIX_Egl_Js_14 &lt;dbl&gt;, AUS_CAN_ST2_MIX_Egl_Js_15 &lt;dbl&gt;, …</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="co"># get plant metadata</span></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plant_md</span>(multi_sfn)</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_TRE</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 26</span></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    140 Corrected, measur…          23.5 ARG_TRE…   23.6 NA                29.7</span></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    140 No azimuthal corr…          22.5 ARG_TRE…   20.2 NA                13.0</span></span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    140 No azimuthal corr…          22   ARG_TRE…   23.8 NA                29.8</span></span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    140 No azimuthal corr…          23.5 ARG_TRE…   19.5 NA                15.1</span></span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: pl_name &lt;chr&gt;, pl_radial_int &lt;chr&gt;,</span></span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_remarks &lt;lgl&gt;, pl_sap_units &lt;chr&gt;, pl_sapw_area &lt;dbl&gt;,</span></span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;, pl_sens_cor_grad &lt;chr&gt;,</span></span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;, pl_sens_length &lt;int&gt;,</span></span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;, pl_sens_timestep &lt;int&gt;,</span></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;lgl&gt;, si_code &lt;chr&gt;,</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ARG_MAZ</span></span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 26</span></span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pl_age pl_azimut_int      pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    180 Corrected, measur…          14.7 ARG_MAZ…   41.1 NA               109. </span></span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    180 No azimuthal corr…          13   ARG_MAZ…   33.2 NA                58.4</span></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    180 No azimuthal corr…           6   ARG_MAZ…   23.2 NA                35.0</span></span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    180 No azimuthal corr…          21   ARG_MAZ…   55.6 NA               174. </span></span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    180 No azimuthal corr…          10   ARG_MAZ…   38   NA                88  </span></span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more variables: pl_name &lt;chr&gt;, pl_radial_int &lt;chr&gt;,</span></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_remarks &lt;lgl&gt;, pl_sap_units &lt;chr&gt;, pl_sapw_area &lt;dbl&gt;,</span></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;, pl_sens_cor_grad &lt;chr&gt;,</span></span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;, pl_sens_length &lt;int&gt;,</span></span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;, pl_sens_timestep &lt;int&gt;,</span></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_social &lt;chr&gt;, pl_species &lt;chr&gt;, pl_treatment &lt;lgl&gt;, si_code &lt;chr&gt;,</span></span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sap_units_orig &lt;chr&gt;</span></span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $AUS_CAN_ST2_MIX</span></span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 34 × 26</span></span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pl_age pl_azimut_int   pl_bark_thick pl_code    pl_dbh pl_height pl_leaf_area</span></span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;lgl&gt;         &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       </span></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1   14.5 No azimuthal c… NA            AUS_CAN_S…   13.1      14.3 NA          </span></span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2   14.5 No azimuthal c… NA            AUS_CAN_S…   10.4      12.9 NA          </span></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3   14.5 No azimuthal c… NA            AUS_CAN_S…   12.8      14.1 NA          </span></span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4   14.5 No azimuthal c… NA            AUS_CAN_S…   17.1      19.4 NA          </span></span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5   14.5 No azimuthal c… NA            AUS_CAN_S…   11.6      13.6 NA          </span></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6   14.5 No azimuthal c… NA            AUS_CAN_S…   19.2      20.5 NA          </span></span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7   14.5 No azimuthal c… NA            AUS_CAN_S…   12.8      16.6 NA          </span></span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8   14.5 No azimuthal c… NA            AUS_CAN_S…   12.5      14.1 NA          </span></span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9   14.5 No azimuthal c… NA            AUS_CAN_S…   13.6      17.2 NA          </span></span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   14.5 No azimuthal c… NA            AUS_CAN_S…   13.8      14.7 NA          </span></span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 24 more rows, and 19 more variables: pl_name &lt;chr&gt;,</span></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_radial_int &lt;chr&gt;, pl_remarks &lt;chr&gt;, pl_sap_units &lt;chr&gt;,</span></span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_area &lt;dbl&gt;, pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;,</span></span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_grad &lt;lgl&gt;, pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;,</span></span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_length &lt;lgl&gt;, pl_sens_man &lt;lgl&gt;, pl_sens_meth &lt;chr&gt;,</span></span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_timestep &lt;int&gt;, pl_social &lt;lgl&gt;, pl_species &lt;chr&gt;,</span></span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_treatment &lt;chr&gt;, si_code &lt;chr&gt;, pl_sap_units_orig &lt;chr&gt;</span></span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a><span class="co"># with metadata, we can collapse</span></span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plant_md</span>(multi_sfn, <span class="at">collapse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 26</span></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pl_age pl_azimut_int     pl_bark_thick pl_code  pl_dbh pl_height pl_leaf_area</span></span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  140   Corrected, measu…          23.5 ARG_TRE…   23.6      NA           29.7</span></span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  140   No azimuthal cor…          22.5 ARG_TRE…   20.2      NA           13.0</span></span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  140   No azimuthal cor…          22   ARG_TRE…   23.8      NA           29.8</span></span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  140   No azimuthal cor…          23.5 ARG_TRE…   19.5      NA           15.1</span></span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  180   Corrected, measu…          14.7 ARG_MAZ…   41.1      NA          109. </span></span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  180   No azimuthal cor…          13   ARG_MAZ…   33.2      NA           58.4</span></span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  180   No azimuthal cor…           6   ARG_MAZ…   23.2      NA           35.0</span></span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  180   No azimuthal cor…          21   ARG_MAZ…   55.6      NA          174. </span></span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  180   No azimuthal cor…          10   ARG_MAZ…   38        NA           88  </span></span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   14.5 No azimuthal cor…          NA   AUS_CAN…   13.1      14.3         NA  </span></span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 33 more rows, and 19 more variables: pl_name &lt;chr&gt;,</span></span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_radial_int &lt;chr&gt;, pl_remarks &lt;chr&gt;, pl_sap_units &lt;chr&gt;,</span></span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sapw_area &lt;dbl&gt;, pl_sapw_depth &lt;dbl&gt;, pl_sens_calib &lt;lgl&gt;,</span></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_cor_grad &lt;chr&gt;, pl_sens_cor_zero &lt;chr&gt;, pl_sens_hgt &lt;dbl&gt;,</span></span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_length &lt;int&gt;, pl_sens_man &lt;chr&gt;, pl_sens_meth &lt;chr&gt;,</span></span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_sens_timestep &lt;int&gt;, pl_social &lt;chr&gt;, pl_species &lt;chr&gt;,</span></span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pl_treatment &lt;chr&gt;, si_code &lt;chr&gt;, pl_sap_units_orig &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div id="utilities-1" class="section level2">
 <h2>Utilities</h2>
-<p>All the utilities that exists for <code>sfn_data</code> work for <code>sfn_data_multi</code> objects, executing the function for all the sites contained in the <code>sfn_data_multi</code> object:</p>
+<p>All the utilities thet exists for <code>sfn_data</code> work for <code>sfn_data_multi</code> objects, executing the function for all the sites contained in the <code>sfn_data_multi</code> object:</p>
 <div id="sfn_plot-1" class="section level3">
 <h3><code>sfn_plot</code></h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>multi_plot <span class="ot">&lt;-</span> <span class="fu">sfn_plot</span>(multi_sfn, <span class="at">formula =</span> <span class="sc">~</span> vpd)</span>
@@ -783,32 +773,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Crunching data for AUS_CAN_ST2_MIX. In large datasets this could take a while&quot;</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;General data for AUS_CAN_ST2_MIX&quot;</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>multi_metrics[[<span class="st">&#39;ARG_TRE&#39;</span>]][[<span class="st">&#39;sapf&#39;</span>]]</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 x 21</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_m… ARG_TRE_Nan_Jt_2_… ARG_TRE_Nan_Jt_3_…</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                308.               173.               303.</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                507.               376.               432.</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00                541.               380.               391.</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                330.               218.               272.</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                338.               219.               278.</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                384.               243.               310.</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00                492.               300.               390.</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                573.               389.               497.</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                601.               400.               484.</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                502.               360.               450.</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                544.               411.               506.</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                573.               451.               589.</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                371.               285.               357.</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                386.               293.               381.</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 21</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TIMESTAMP           ARG_TRE_Nan_Jt_1_mean ARG_TRE_Nan_Jt_2… ARG_TRE_Nan_Jt_3…</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2009-11-17 00:00:00                  308.              173.              303.</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2009-11-18 00:00:00                  507.              376.              432.</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2009-11-19 00:00:00                  541.              380.              391.</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2009-11-20 00:00:00                  330.              218.              272.</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2009-11-21 00:00:00                  338.              219.              278.</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2009-11-22 00:00:00                  384.              243.              310.</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2009-11-23 00:00:00                  492.              300.              390.</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2009-11-24 00:00:00                  573.              389.              497.</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2009-11-25 00:00:00                  601.              400.              484.</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2009-11-26 00:00:00                  502.              360.              450.</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2009-11-27 00:00:00                  544.              411.              506.</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2009-11-28 00:00:00                  573.              451.              589.</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2009-11-29 00:00:00                  371.              285.              357.</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2009-11-30 00:00:00                  386.              293.              381.</span></span>
 <span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 17 more variables: ARG_TRE_Nan_Jt_4_mean &lt;dbl&gt;,</span></span>
 <span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_sd &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_sd &lt;dbl&gt;,</span></span>
 <span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_sd &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_sd &lt;dbl&gt;,</span></span>
 <span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_coverage &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_coverage &lt;dbl&gt;,</span></span>
 <span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_coverage &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_coverage &lt;dbl&gt;,</span></span>
 <span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_q_95 &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_q_95 &lt;dbl&gt;,</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_q_95 &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_q_95 &lt;dbl&gt;,</span></span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_1_centroid &lt;dbl&gt;, ARG_TRE_Nan_Jt_2_centroid &lt;dbl&gt;,</span></span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_centroid &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_centroid &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ARG_TRE_Nan_Jt_3_q_95 &lt;dbl&gt;, ARG_TRE_Nan_Jt_4_q_95 &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 </div>
 </div>

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>Data Flags</title>
 
@@ -46,20 +46,20 @@
 
 <h1 class="title toc-ignore">Data Flags</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
 <p>Data flags indicate comments on individual data points raised in the quality control assessment of site data. They are useful to understand the original data and to track analysis problems to their origins.</p>
 <p>Possible values for flags when data comes from Sapfluxnet project are as follow:</p>
 <ul>
-<li><p><strong>“CALCULATED”</strong> Indicates that the value was originally missing and was calculated in the quality check step.</p></li>
-<li><p><strong>“MANUAL_REMOVED”</strong> Indicates that the value was manually removed in the quality control step, due to curator decision.</p></li>
-<li><p><strong>“NA_ADDED”</strong> Indicates that the value was originally non-existent and it was created and filled with NA. Usually the result of equalising the sap flow and environmental TIMESTAMPS.</p></li>
-<li><p><strong>“NA_PRESENT”</strong> Indicates that the value was originally an NA</p></li>
-<li><p><strong>“OUT_REMOVED”</strong> Indicates that the value was clearly an outlier and was removed and substituted by NA</p></li>
-<li><p><strong>“OUT_WARN”</strong> Indicates that the value could be an outlier based on hampel filter algorithm. Not removed nor substituted</p></li>
-<li><p><strong>“RANGE_REMOVED”</strong> Indicates values that were clearly out of the range of variable. Removed and converted to NA</p></li>
+<li><p><strong>“CALCULATED”</strong> Indicates thet the value was originally missing and was calculated in the quality check step.</p></li>
+<li><p><strong>“MANUAL_REMOVED”</strong> Indicates thet the value was manually removed in the quality control step, due to curator decision.</p></li>
+<li><p><strong>“NA_ADDED”</strong> Indicates thet the value was originally non-existent and it was created and filled with NA. Usually the result of equalising the sap flow and environmental TIMESTAMPS.</p></li>
+<li><p><strong>“NA_PRESENT”</strong> Indicates thet the value was originally an NA</p></li>
+<li><p><strong>“OUT_REMOVED”</strong> Indicates thet the value was clearly an outlier and was removed and substituted by NA</p></li>
+<li><p><strong>“OUT_WARN”</strong> Indicates thet the value could be an outlier based on hampel filter algorithm. Not removed nor substituted</p></li>
+<li><p><strong>“RANGE_REMOVED”</strong> Indicates values thet were clearly out of the range of variable. Removed and converted to NA</p></li>
 <li><p><strong>“RANGE_WARN”</strong> Indicates that the value could be out of “usual” maximum value for the variable. Not removed.</p></li>
 <li><p><strong>“USER_MODF”</strong> Modified by the user. Added when sfn_mutate or sfn_mutate_at functions are used.</p></li>
 </ul>

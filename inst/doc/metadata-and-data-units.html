@@ -12,7 +12,7 @@
 
 <meta name="author" content="Victor Granda (Sapfluxnet Team)" />
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-11-19" />
 
 <title>Metadata and Data units</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Metadata and Data units</h1>
 <h4 class="author">Victor Granda (Sapfluxnet Team)</h4>
-<h4 class="date">2021-10-04</h4>
+<h4 class="date">2021-11-19</h4>
 
 
 
@@ -175,8 +175,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Numeric</span></span></code></pre></div>
 <p>As it can be seen, site elevation is in meters and stand age is in years.</p>
 <p>Nevertheless, and for the sake of completion, here you can find a complete list of the metadata variables and their units:</p>
-<!-- html table generated in R 4.1.1 by xtable 1.8-4 package -->
-<!-- Mon Oct  4 09:22:53 2021 -->
+<!-- html table generated in R 4.1.2 by xtable 1.8-4 package -->
+<!-- Fri Nov 19 15:51:20 2021 -->
 <table border="1">
 <tr>
 <th>
@@ -1649,8 +1649,8 @@ None
 <div id="environmental-variables" class="section level3">
 <h3>Environmental variables</h3>
 <p>Environmental variables come in the following units:</p>
-<!-- html table generated in R 4.1.1 by xtable 1.8-4 package -->
-<!-- Mon Oct  4 09:22:53 2021 -->
+<!-- html table generated in R 4.1.2 by xtable 1.8-4 package -->
+<!-- Fri Nov 19 15:51:20 2021 -->
 <table border="1">
 <tr>
 <th>
@@ -1835,7 +1835,7 @@ cm3 cm-3
 <p>When inspecting the solar <code>TIMESTAMP</code> variable, timezone declared is UTC:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_solar_timestamp</span>(ARG_TRE) <span class="sc">%&gt;%</span> <span class="fu">tz</span>()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;UTC&quot;</span></span></code></pre></div>
-<p>This is so because solar timestamp is only refered to the sun position in the sky, rendering the timezone useless in this case. So UTC was chosen as timezone to be able to join and compare global data.</p>
+<p>This is so because solar timestamp is only referred to the sun position in the sky, rendering the timezone useless in this case. So UTC was chosen as timezone to be able to join and compare global data.</p>
 </div>
 </div>
 

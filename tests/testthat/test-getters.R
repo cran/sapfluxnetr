@@ -55,12 +55,12 @@ test_that('as_sfn_data_multi helper works as intended', {
 test_that('.write_sfn_metadata writes correctly the file', {
 
   #testthat::skip_on_cran()
-  
+
   folder <- tempdir()
   save(ARG_TRE, file = file.path(folder, 'ARG_TRE.RData'))
   save(ARG_MAZ, file = file.path(folder, 'ARG_MAZ.RData'))
   save(AUS_CAN_ST2_MIX, file = file.path(folder, 'AUS_CAN_ST2_MIX.RData'))
-  
+
   sfn_metadata <- sapfluxnetr:::.write_metadata_cache(folder, .dry = TRUE)
 
   expect_false(file.exists(file.path(folder, '.metadata_cache.RData')))
@@ -116,23 +116,14 @@ test_that('filter_sites_by_md combines all metadata correctly', {
   sites <- sfn_sites_in_folder('Data')
   filters <- list(dplyr::quo(pl_sens_meth == 'HR'))
 
-  # expect_true(
-  #   is.character(filter_by_var(!!!filters, folder = 'Data'))
-  # )
   expect_true(is.character(filter_sites_by_md(
     sites, sfn_metadata_ex, !!!filters
   )))
 
-  # expect_length(
-  #   filter_by_var(!!!filters, folder = 'Data'), 2
-  # )
   expect_length(
     filter_sites_by_md(sites, sfn_metadata_ex, !!!filters), 2
   )
 
-  # expect_identical(
-  #   filter_by_var(!!!filters, folder = 'Data'), c('ARG_MAZ', 'ARG_TRE')
-  # )
   expect_identical(
     filter_sites_by_md(sites, sfn_metadata_ex, !!!filters),
     c('ARG_MAZ', 'ARG_TRE')
@@ -143,9 +134,6 @@ test_that('filter_sites_by_md combines all metadata correctly', {
     dplyr::quo(env_ta == 'Clearing')
   )
 
-  # expect_length(
-  #   filter_by_var(!!!filters, folder = 'Data'), 0
-  # )
   expect_length(
     filter_sites_by_md(sites, sfn_metadata_ex, !!!filters), 0
   )
@@ -155,30 +143,17 @@ test_that('filter_sites_by_md combines all metadata correctly', {
     dplyr::quo(env_ta == 'Above canopy')
   )
 
-  # expect_length(
-  #   filter_by_var(!!!filters, folder = 'Data'), 0
-  # )
   expect_length(
     filter_sites_by_md(sites, sfn_metadata_ex, !!!filters), 0
   )
-
-  # expect_error(
-  #   filter_by_var(!!!filters, folder = 'tururu'),
-  #   'tururu'
-  # )
 
   filters <- list(
     dplyr::quo(pl_sens_meth == 'HR'),
     dplyr::quo(env_nonexistentname == 'Above canopy')
   )
 
-  # expect_error(
-  #   filter_by_var(!!!filters, folder = 'Data'),
-  #   'env_nonexistentname'
-  # )
   expect_error(
-    filter_sites_by_md(sites, sfn_metadata_ex, !!!filters),
-    class = 'dplyr_error'
+    filter_sites_by_md(sites, sfn_metadata_ex, !!!filters)
     # 'env_nonexistentname'
   )
 
@@ -188,17 +163,17 @@ test_that('filter_sites_by_md combines all metadata correctly', {
 
 #### sfn_sites_in_folder ####
 test_that('sfn_sites_in_folder returns the expected results', {
-  
+
   expect_true(is.character(sfn_sites_in_folder('Data')))
   expect_length(sfn_sites_in_folder('Data'), 3)
   expect_identical(
     sfn_sites_in_folder('Data'), c('ARG_MAZ', 'ARG_TRE', 'AUS_CAN_ST2_MIX')
   )
-  
+
   # errors
   expect_error(sfn_sites_in_folder('NonExistentFolder'))
   expect_error(sfn_sites_in_folder(53))
-  
+
 })
 
 #### teardown
