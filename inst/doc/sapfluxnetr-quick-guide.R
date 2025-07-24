@@ -7,14 +7,14 @@ knitr::opts_chunk$set(
 folder <- 'resources'
 
 ## ----cran_install, eval=FALSE-------------------------------------------------
-#  install.packages('sapfluxnetr')
+# install.packages('sapfluxnetr')
 
 ## ----github_inst, eval=FALSE--------------------------------------------------
-#  # if (!require(remotes)) {install.packages('remotes')}
-#  remotes::install_github(
-#    'sapfluxnet/sapfluxnetr', ref = 'devel',
-#    build_opts = c("--no-resave-data", "--no-manual", "--build-vignettes")
-#  )
+# # if (!require(remotes)) {install.packages('remotes')}
+# remotes::install_github(
+#   'sapfluxnet/sapfluxnetr', ref = 'devel',
+#   build_opts = c("--no-resave-data", "--no-manual", "--build-vignettes")
+# )
 
 ## ----pkg_load-----------------------------------------------------------------
 library(sapfluxnetr)
@@ -23,24 +23,24 @@ library(dplyr)
 library(ggplot2)
 
 ## ----downzip, eval = FALSE----------------------------------------------------
-#  # download the data
-#  download.file(
-#    url = "https://zenodo.org/record/3971689/files/0.1.5.zip?download=1",
-#    destfile = '0.1.5.zip'
-#  )
-#  # unzip the data
-#  # BE SURE YOU HAVE AT LEAST 24GB OF DISK SPACE
-#  unzip("0.1.5.zip")
-#  # check if files are present
-#  list.files(file.path('0.1.5', 'RData', 'plant'))
-#  list.files(file.path('0.1.5', 'csv', 'plant'))
+# # download the data
+# download.file(
+#   url = "https://zenodo.org/record/3971689/files/0.1.5.zip?download=1",
+#   destfile = '0.1.5.zip'
+# )
+# # unzip the data
+# # BE SURE YOU HAVE AT LEAST 24GB OF DISK SPACE
+# unzip("0.1.5.zip")
+# # check if files are present
+# list.files(file.path('0.1.5', 'RData', 'plant'))
+# list.files(file.path('0.1.5', 'csv', 'plant'))
 
 ## ----read_and_inspect, eval=FALSE---------------------------------------------
-#  # read the data
-#  arg_maz <- read_sfn_data('ARG_MAZ', folder = 'RData/plant')
-#  
-#  # see a brief summary of the site:
-#  arg_maz
+# # read the data
+# arg_maz <- read_sfn_data('ARG_MAZ', folder = 'RData/plant')
+# 
+# # see a brief summary of the site:
+# arg_maz
 
 ## ----read_internals, echo=FALSE-----------------------------------------------
 # read the data
@@ -127,7 +127,7 @@ arg_maz_daily[['env']] %>%
   select(TIMESTAMP, ends_with('mean'))
 
 ## ----metadata_database, eval = FALSE------------------------------------------
-#  sfn_metadata <- read_sfn_metadata(folder = 'RData/plant', .write_cache = TRUE)
+# sfn_metadata <- read_sfn_metadata(folder = 'RData/plant', .write_cache = TRUE)
 
 ## ----metadata_database_real, echo=FALSE, warning=FALSE------------------------
 # sfn_metadata <- read_sfn_metadata(folder = folder, .write_cache = TRUE)
@@ -138,22 +138,22 @@ sfn_metadata <- sapfluxnetr:::.write_metadata_cache(folder = folder, .dry = TRUE
 sfn_metadata[['plant_md']]
 
 ## ----sfn_sites_in_folder, eval=FALSE------------------------------------------
-#  folder <- 'RData/plant/'
-#  sites <- sfn_sites_in_folder(folder)
-#  sites
+# folder <- 'RData/plant/'
+# sites <- sfn_sites_in_folder(folder)
+# sites
 
 ## ----sfn_sites_in_folder_real, echo=FALSE-------------------------------------
 sites <- sfn_sites_in_folder(folder)
 sites
 
 ## ----filtering_by_md, eval=FALSE----------------------------------------------
-#  temperate <- sfn_sites_in_folder(folder) %>%
-#    filter_sites_by_md(
-#      si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
-#      metadata = sfn_metadata
-#    )
-#  
-#  temperate
+# temperate <- sfn_sites_in_folder(folder) %>%
+#   filter_sites_by_md(
+#     si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
+#     metadata = sfn_metadata
+#   )
+# 
+# temperate
 
 ## ----filtering_by_md_real, echo=FALSE, warning=FALSE--------------------------
 temperate <- sfn_sites_in_folder(folder) %>%
@@ -164,14 +164,14 @@ temperate <- sfn_sites_in_folder(folder) %>%
 temperate
 
 ## ----filters_combined, eval=FALSE---------------------------------------------
-#  temperate_hr <- sfn_sites_in_folder(folder) %>%
-#    filter_sites_by_md(
-#      si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
-#      pl_sens_meth == 'HR',
-#      metadata = sfn_metadata
-#    )
-#  
-#  temperate_hr
+# temperate_hr <- sfn_sites_in_folder(folder) %>%
+#   filter_sites_by_md(
+#     si_biome %in% c('Woodland/Shrubland', 'Temperate forest'),
+#     pl_sens_meth == 'HR',
+#     metadata = sfn_metadata
+#   )
+# 
+# temperate_hr
 
 ## ----filters_combined_real, echo=FALSE, warning=FALSE-------------------------
 temperate_hr <- sfn_sites_in_folder(folder) %>%
@@ -189,9 +189,9 @@ sfn_vars_to_filter()
 describe_md_variable('pl_sens_meth')
 
 ## ----multi, eval=FALSE--------------------------------------------------------
-#  temperate_sites <- temperate %>%
-#    read_sfn_data(folder = 'RData/plant')
-#  temperate_sites
+# temperate_sites <- temperate %>%
+#   read_sfn_data(folder = 'RData/plant')
+# temperate_sites
 
 ## ----multi_real, echo=FALSE---------------------------------------------------
 temperate_sites <- temperate %>%
